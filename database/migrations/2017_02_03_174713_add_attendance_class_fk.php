@@ -26,6 +26,8 @@ class AddAttendanceClassFk extends Migration
      */
     public function down()
     {
-        $table->dropForeign(['class_id', 'student_id']);
+        Schema::table('attendance', function (Blueprint $table) {
+            $table->dropForeign(['class_id', 'student_id']);
+        });
     }
 }

@@ -12,3 +12,11 @@
 */
 
 Route::get('/', 'MainSiteController@show');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
