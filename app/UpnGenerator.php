@@ -50,7 +50,6 @@ class UpnGenerator
 		$this->serial = empty($prevUpn) ? 1 : $prevUpn->serial_number + 1;
 		$this->buildUpn();
 		$this->getCheckLetter();
-		var_dump($this->upn);
 	}
 
 	public function generateTemp($schoolYear)
@@ -76,7 +75,6 @@ class UpnGenerator
 		$this->upn = substr($this->upn, 0, -1);
 		$this->getCheckLetter();
 		$this->upn .= self::$checkLetters[$lastDigit];
-		dd($this->upn);
 	}
 
 	private function buildUpn()
@@ -113,6 +111,11 @@ class UpnGenerator
 		$upn->is_temp = $this->isTemp;
 
 		$upn->save();
+	}
+
+	public function getUpn()
+	{
+		return $this->upn;
 	}
 }
 
