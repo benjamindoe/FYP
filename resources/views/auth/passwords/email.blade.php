@@ -1,7 +1,6 @@
 @extends('layouts.base')
-
-<!-- Main Content -->
-@section('content')
+@section('form-action', url('/password/email'))
+@section('form-fields')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">

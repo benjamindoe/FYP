@@ -20,7 +20,7 @@
 		@yield('head')
 	</head>
 	<body>
-		<div class="mdl-layout mdl-js-layout {{ Request::is('login') || Request::is('register') || Request::is('password/*') ?'': 'mdl-layout--fixed-drawer'}} mdl-layout--fixed-header">
+		<div class="mdl-layout mdl-js-layout @section('fixed-drawer-class') mdl-layout--fixed-drawer @show mdl-layout--fixed-header">
 			<header class="mdl-layout__header">
 				<div class="mdl-layout__header-row">
 					<span class="mdl-layout-title">@yield('title')</span>
@@ -34,21 +34,21 @@
 					</nav>
 				</div>
 			</header>
-			@unless (Request::is('login') || Request::is('register') || Request::is('password/*'));
-			<div class="mdl-layout__drawer">
-				<nav class="mdl-navigation">
-					<a class="mdl-navigation__link" href="">Link</a>
-					<a class="mdl-navigation__link" href="">Link</a>
-					<a class="mdl-navigation__link" href="">Link</a>
-					<a class="mdl-navigation__link" href="">Link</a>
-				</nav>
-			</div>
-			@endunless
-  		<main class="mdl-layout__content">
-  			<div class="page-content">
-				@yield('content')
-			</div>
-		</main>
+			@section('drawer')
+				<div class="mdl-layout__drawer">
+					<nav class="mdl-navigation">
+						<a class="mdl-navigation__link" href="">Link</a>
+						<a class="mdl-navigation__link" href="">Link</a>
+						<a class="mdl-navigation__link" href="">Link</a>
+						<a class="mdl-navigation__link" href="">Link</a>
+					</nav>
+				</div>
+			@show
+	  		<main class="mdl-layout__content">
+	  			<div class="page-content">
+					@yield('content')
+				</div>
+			</main>
 		</div>
 	</body>
 </html>
