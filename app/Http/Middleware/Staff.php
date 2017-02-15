@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Http\Request;
 class Staff
 {
 	/**
@@ -16,6 +16,7 @@ class Staff
 	 */
 	public function handle($request, Closure $next)
 	{
+		Request::is();
 		if(Auth::check())
 		{
 			if(Auth::user()->isStaff())

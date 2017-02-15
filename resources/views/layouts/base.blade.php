@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>Laravel - @yield('title')</title>
+		<title>FYP - @yield('title', 'MIS')</title>
 
 		<!-- Fonts -->
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
@@ -19,7 +19,7 @@
 		@yield('head')
 	</head>
 	<body>
-		<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+		<div class="mdl-layout mdl-js-layout {{ Request::is('login') || Request::is('register') || Request::is('password/*') ?'': 'mdl-layout--fixed-drawer'}} mdl-layout--fixed-header">
 			<header class="mdl-layout__header">
 				<div class="mdl-layout__header-row">
 					<span class="mdl-layout-title">@yield('title')</span>
@@ -33,6 +33,7 @@
 					</nav>
 				</div>
 			</header>
+			@unless (Request::is('login') || Request::is('register') || Request::is('password/*'));
 			<div class="mdl-layout__drawer">
 				<nav class="mdl-navigation">
 					<a class="mdl-navigation__link" href="">Link</a>
@@ -41,6 +42,7 @@
 					<a class="mdl-navigation__link" href="">Link</a>
 				</nav>
 			</div>
+			@endunless
   		<main class="mdl-layout__content">
   			<div class="page-content">
 				@yield('content')

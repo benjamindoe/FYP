@@ -64,4 +64,24 @@ class User extends Authenticatable
 	{
 		return $this->is_super_admin;
 	}
+
+	public function userLevel()
+	{
+		if($this->isSuperAdmin())
+		{
+			return 'super';
+		}
+		else if($this->isStaff())
+		{
+			return 'staff';
+		}
+		else if ($this->isParent())
+		{
+			return 'parent';
+		}
+		else
+		{
+			return 'student';
+		}
+	}
 }

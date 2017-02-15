@@ -3,7 +3,7 @@
 @section('content')
 <div class="mdl-grid">
 	<div class="mdl-layout-spacer"></div>
-	<div class="mdl-card">
+	<div class="mdl-card mdl-shadow--2dp">
 		<form class="" method="POST" action="{{ url('/register') }}">
 			{{ csrf_field() }}
 
