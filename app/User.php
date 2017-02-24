@@ -10,6 +10,13 @@ class User extends Authenticatable
 	use Notifiable;
 
 	/**
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'users';
+
+	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
@@ -35,7 +42,7 @@ class User extends Authenticatable
 	 */
 	public function isStudent()
 	{
-		return $this->student_id || $this->is_super_admin;
+		return $this->student_id;
 	}
 
 	/**
@@ -44,7 +51,7 @@ class User extends Authenticatable
 	 */
 	public function isParent()
 	{
-		return $this->parent_id || $this->is_super_admin;
+		return $this->parent_id;
 	}
 
 	/**
@@ -53,7 +60,7 @@ class User extends Authenticatable
 	 */
 	public function isStaff()
 	{
-		return $this->staff_id || $this->is_super_admin;
+		return $this->staff_id;
 	}
 
 	/**
@@ -69,19 +76,23 @@ class User extends Authenticatable
 	{
 		if($this->isSuperAdmin())
 		{
-			return 'super';
+			return 4;
 		}
 		else if($this->isStaff())
 		{
-			return 'staff';
+			return 3;
 		}
 		else if ($this->isParent())
 		{
-			return 'parent';
+			return 2;
+		}
+		else if ($this->isStudent())
+		{
+			return 1;
 		}
 		else
 		{
-			return 'student';
+			return 0;
 		}
 	}
 }

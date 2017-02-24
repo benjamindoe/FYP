@@ -11,7 +11,6 @@
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 
 		<!-- Styles -->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css" />
 		<link rel="stylesheet" href="{{asset('css/app.css')}}" />
 
@@ -20,7 +19,7 @@
 		@yield('head')
 	</head>
 	<body>
-		<div class="mdl-layout mdl-js-layout @section('fixed-drawer-class') mdl-layout--fixed-drawer @show mdl-layout--fixed-header">
+		<div class="mdl-layout mdl-js-layout @yield('fixed-drawer-class') mdl-layout--fixed-header">
 			<header class="mdl-layout__header">
 				<div class="mdl-layout__header-row">
 					<span class="mdl-layout-title">@yield('title')</span>
@@ -34,30 +33,7 @@
 					</nav>
 				</div>
 			</header>
-			@section('drawer')
-				<div class="mdl-layout__drawer">
-					<header class="drawer-header">
-						<a href="{{url('profile/'.Auth::user()->username)}}">
-					</header>
-					<nav class="mdl-navigation">
-					@if(Auth::user()->isSuperAdmin())
-						<a class="mdl-navigation__link" href="">Link</a>
-					@elseif(Auth::user()->isStaff())
-						<a class="mdl-navigation__link" href="">Link</a>
-						<a class="mdl-navigation__link" href="">Link</a>
-					@elseif(Auth::user()->isParent())
-						<a class="mdl-navigation__link" href="">Link</a>
-						<a class="mdl-navigation__link" href="">Link</a>
-						<a class="mdl-navigation__link" href="">Link</a>
-					@else
-						<a class="mdl-navigation__link" href="">Link</a>
-						<a class="mdl-navigation__link" href="">Link</a>
-						<a class="mdl-navigation__link" href="">Link</a>
-						<a class="mdl-navigation__link" href="">Link</a>
-					@endif
-					</nav>
-				</div>
-			@show
+			@yield('drawer')
 	  		<main class="mdl-layout__content">
 	  			<div class="page-content">
 					@yield('content')

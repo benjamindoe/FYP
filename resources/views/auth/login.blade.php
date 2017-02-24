@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('layouts.no-drawer')
 @section('title', 'Login')
 @section('form-action', url('/login'))
 @section('form-fields')

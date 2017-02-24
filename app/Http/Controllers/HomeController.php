@@ -5,16 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\UpnGenerator;
-
+use App\User;
 
 class HomeController extends Controller
 {
-	public function __construct()
+	public function index()
 	{
-		$this->middleware('auth');
+		if(User::count() > 0)
+		{
+			return redirect('dashboard');
+		} else 
+		{
+			return redirect('register');
+		}
 	}
 
-	public function index()
+	public function dashboard()
 	{
 		$userLevel = Auth::user()->userLevel();
 		switch ($userLevel)

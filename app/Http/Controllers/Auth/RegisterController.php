@@ -28,7 +28,7 @@ class RegisterController extends Controller
 	 *
 	 * @var string
 	 */
-	protected $redirectTo = '/';
+	protected $redirectTo = '/dashboard';
 
 	/**
 	 * Create a new controller instance.
@@ -47,7 +47,7 @@ class RegisterController extends Controller
 	 */
 	public function showRegistrationForm()
 	{
-		if(User::all()->count() > 0)
+		if(User::count() > 0)
 			abort(404);
 
 		return view('auth.register');
@@ -76,7 +76,7 @@ class RegisterController extends Controller
 	protected function create(array $data)
 	{
 		$superAdmin = false;
-		if(User::all()->count() === 0)
+		if(User::count() === 0)
 			$superAdmin = isset($data['superAdmin']) ? (bool)$data['superAdmin'] : false;
 
 		$user = User::create([
