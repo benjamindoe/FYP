@@ -9,12 +9,12 @@ class SchoolController extends Controller
 {
 	public function showAddForm()
 	{
-		return view('admin.school.edit', ['title' => 'Add School', 'url' => 'add']);
+		return view('admin.school.edit', ['title' => 'Add School', 'url' => url('schools/add')]);
 	}
 
 	public function showEditForm(Request $request, $id)
 	{
-		$school = School::updateOrCreate($id);
+		$school = School::find($id);
 	}
 
 	public function add(Request $request)
