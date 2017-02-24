@@ -11,6 +11,7 @@ class SchoolController extends Controller
 	{
 		return view('admin.school.edit', ['title' => 'Add School', 'url' => url('schools/add')]);
 	}
+	
 
 	public function showEditForm(Request $request, $id)
 	{
