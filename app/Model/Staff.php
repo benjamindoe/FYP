@@ -34,6 +34,14 @@ class Staff extends Model
 	 */
 	public function user()
 	{
-		return $this->hasOne('App\Model\User');
+		return $this->hasOne('App\User');
+	}
+
+	/**
+	 * Get the classes of the teacher
+	 */
+	public function classes()
+	{
+		return $this->belongsToMany('App\Model\Classes');
 	}	
 }

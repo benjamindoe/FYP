@@ -8,20 +8,27 @@ use Illuminate\Support\Facades\Validator;
 use App\Model\Staff;
 use App\Model\Role;
 use App\Model\School;
+use App\User;
 
 class StaffController extends Controller
 {
-	public function showStaffList(Request $request, int $urn)
+
+	public function showSchoolStaffList(Request $request, int $urn)
 	{
-		$school = School::find($urn);
-		$staff = $school->staff;
-		dd($staff);
-		return view();
+		$staff = SchooL::find($urn)->staff;
+		return view('staff.listviewer', ['url' => 'schools/'.$urn.'/staff/', 'staff' => $staff]);
+	}
+
+	public function showStaffList(Request $request)
+	{
+		$urn = Auth()->user()->staff->school_urn;
+		$staff = School::find($urn)->staff;
+		return view('staff.listviewer', ['url' => 'schools/'.$urn.'/staff/', 'staff' => $staff]);
 	}
 
 	public function showSchoolsStaffProfile(Request $request, int $urn, int $id)
 	{
-		# code...
+		return view();
 	}
 
 	public function showStaffProfile(Request $request, int $id)
@@ -42,13 +49,13 @@ class StaffController extends Controller
 	public function showSchoolStaffEditForm(Request $request, int $urn, int $id)
 	{
 		$staff = Staff::find($id);
-		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all()]);
+		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all(), 'url' => ('schools/'.$urn.'/staff/'.$id.'/edit')]);
 	}
 
 	public function showEditForm(Request $request, int $id)
 	{
 		$staff = Staff::find($id);
-		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all()]);
+		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all(), 'url' => 'staff/']);
 	}
 
 	public function addSchoolsStaff(Request $request, int $urn)
@@ -151,4 +158,5 @@ class StaffController extends Controller
 			'password' => bcrypt($data['password'])
 			]);
 	}
+
 }
