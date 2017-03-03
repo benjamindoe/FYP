@@ -8,7 +8,9 @@
 
 		@component('components.textfield', ['inputName' => 'username'])
 			@slot('value')
-				{{ $staff->user->username or '' }}
+				@if(isset($edit) && $edit)
+					{{ $staff->user()->username or '' }}
+				@endif
 			@endslot
 			Username
 		@endcomponent
@@ -28,9 +30,6 @@
 		@endif
 
 		@component('components.textfield', ['inputName' => 'forename'])
-			@slot('disabled')
-				{{ isset($edit) && $edit ? 'disabled' : '' }}
-			@endslot
 			@slot('value')
 				{{ $staff->forename or '' }}
 			@endslot
@@ -45,8 +44,8 @@
 		@endcomponent
 
 		<select name="role" id="role">
-			@foreach($roles as $role)
-				<option value="{{ $role->role }}">{{ $role->role }}</option>
+			@foreach($roles as $key => $role)
+				<option value="{{ $role }}">{{ ucfirst($role) }}</option>
 			@endforeach
 		</select>
 

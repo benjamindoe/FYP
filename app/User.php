@@ -58,9 +58,9 @@ class User extends Authenticatable
 	 * Return whether current user is a staff member
 	 * @return integer staff ID
 	 */
-	public function isStaff()
+	public function staff()
 	{
-		return $this->staff_id;
+		return $this->belongsTo('App\Model\Staff');
 	}
 
 	/**
@@ -78,7 +78,7 @@ class User extends Authenticatable
 		{
 			return 4;
 		}
-		else if($this->isStaff())
+		else if($this->staff !== null)
 		{
 			return 3;
 		}
@@ -86,7 +86,7 @@ class User extends Authenticatable
 		{
 			return 2;
 		}
-		else if ($this->isStudent())
+		else if ($this->student !== null)
 		{
 			return 1;
 		}

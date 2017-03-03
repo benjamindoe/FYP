@@ -166,7 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        'GrahamCampbell\Exceptions\ExceptionsServiceProvider',
         /*
          * Application Service Providers...
          */

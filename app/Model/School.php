@@ -40,6 +40,6 @@ class School extends Model
 	 */
 	public function staff()
 	{
-		return $this->hasMany('App\Model\Staff', 'unique_reference_number', 'school_urn');
+		return $this->hasMany('App\Model\Staff', 'school_urn', 'unique_reference_number');
 	}
 }
