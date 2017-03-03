@@ -8,7 +8,7 @@
 	<nav class="mdl-navigation">
 		<a class="mdl-navigation__link" href="/">Dashboard</a>
 	@if(Auth::user()->isSuperAdmin())
-		<a class="mdl-navigation__link" href="#">School</a>
+		<a class="mdl-navigation__link" href="{{ url('schools') }}">Schools</a>
 	@elseif(Auth::user()->isStaff())
 		<a class="mdl-navigation__link" href="#">Link</a>
 		<a class="mdl-navigation__link" href="#">Link</a>

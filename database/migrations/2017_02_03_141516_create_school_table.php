@@ -14,10 +14,10 @@ class CreateSchoolTable extends Migration
     public function up()
     {
         Schema::create('school', function (Blueprint $table) {
-            $table->integer('unique_reference_number')->primary();
-            $table->integer('la_number');
+            $table->unsignedInteger('unique_reference_number')->primary();
+            $table->unsignedInteger('la_number');
             $table->string('la_name');
-            $table->integer('establishment_number');
+            $table->unsignedInteger('establishment_number');
             $table->string('establishment_name');
             $table->string('establishment_type');
             $table->string('establishment_type_group');
