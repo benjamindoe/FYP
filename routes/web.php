@@ -30,15 +30,30 @@ Route::group(['prefix' => 'student/{id}', 'middleware' => 'auth.level:student'],
 	Route::get('/', 'Controllre@method');
 	Route::get('attendance/history', 'Controllre@method')->name('attendance');
 	Route::get('attainment/history', 'Controllre@method')->name('attainment');
-
 });
 
 Route::group(['prefix' => 'schools', 'middleware' => 'auth.level:super'], function() {
+	Route::any('/', 'SchoolController@showSchoolsList');
 	Route::get('add', 'SchoolController@showAddForm');
 	Route::post('add', 'SchoolController@add');
-	Route::get('edit/{id}', 'SchoolController@showEditForm');
-	Route::put('edit/{id}', 'SchoolController@edit');
-	Route::delete('delete/{id}', 'SchoolController@delete');
+	Route::get('{id}', 'SchoolController@showSchoolInfo');
+	Route::get('{id}/edit', 'SchoolController@showEditForm');
+	Route::put('{id}/edit', 'SchoolController@edit');
+	Route::delete('{id}/delete', 'SchoolController@delete');
+
+	Route::group(['prefix' => '{urn}/staff'], function() {
+		Route::any('/', 'StaffController@showStaffList');
+		Route::get('add', 'StaffController@showSchoolStaffAddForm');
+		Route::post('add', 'StaffController@addSchoolsStaff');
+		Route::get('{id}', 'StaffController@showSchoolsStaffProfile');
+		Route::get('{id}/edit', 'StaffController@showEditForm');
+		Route::put('{id}/edit', 'StaffController@edit');
+		Route::delete('{id}/delete', 'StaffController@delete');
+	});
+});
+Route::group(['prefix' => 'school', 'middleware' => 'auth.explicit:staff'], function() {
+	Route::get('/', 'SchoolController@showSchoolInfo');
+	Route::get('edit', 'SchoolController@showEditForm');
 });
 Route::group(['prefix' => 'admin', 'middleware' => 'auth.level:staff'], function() {
 	//Route::get();

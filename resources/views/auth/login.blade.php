@@ -2,25 +2,17 @@
 @section('title', 'Login')
 @section('form-action', url('/login'))
 @section('form-fields')
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {{ $errors->has('username') ? 'is-invalid' : '' }}">
-		<input class="mdl-textfield__input" id="username" type="text" name="username" value="{{ old('username') }}">
-		<label class="mdl-textfield__label" for="username">Username</label>
-		@if ($errors->has('username'))
-			<span class="mdl-textfield__error">
-				{{ $errors->first('username') }}
-			</span>
-		@endif
-	</div>
+	@component('components.textfield', ['inputName' => 'username'])
+		@slot('value')
+		@endslot
+		Username
+	@endcomponent
 
-	<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label {{ $errors->has('password') ? 'is-invalid' : '' }}">
-		<input class="mdl-textfield__input" id="password" type="password" name="password">
-		<label class="mdl-textfield__label" for="password">Password</label>
-		@if ($errors->has('password'))
-			<span class="mdl-textfield__error">
-				{{ $errors->first('password') }}
-			</span>
-		@endif
-	</div>
+	@component('components.textfield', ['inputName' => 'password', 'type'=>'password'])
+		@slot('value')
+		@endslot
+		Password
+	@endcomponent
 
 	<label for="remember" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
 		<input class="mdl-checkbox__input" id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : ''}}>

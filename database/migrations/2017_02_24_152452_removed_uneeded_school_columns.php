@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAddressFkSchool extends Migration
+class RemovedUneededSchoolColumns extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddAddressFkSchool extends Migration
     public function up()
     {
         Schema::table('school', function (Blueprint $table) {
-            $table->unsignedInteger('address_id')->after('education_phase');
-            $table->foreign('address_id')->references('id')->on('address');
+            $table->dropColumn(['establishment_type', 'establishment_type_group']);
         });
     }
 
@@ -27,8 +26,8 @@ class AddAddressFkSchool extends Migration
     public function down()
     {
         Schema::table('school', function (Blueprint $table) {
-            $table->dropForeign(['address_id']);
-            $table->dropColumn('address_id');
+            $table->string('establishment_type');
+            $table->string('establishment_type_group');
         });
     }
 }

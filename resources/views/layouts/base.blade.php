@@ -5,7 +5,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<title>FYP - @yield('title', 'MIS')</title>
+		<title>FYP - {{ $title or 'MIS' }}</title>
 
 		<!-- Fonts -->
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
@@ -16,6 +16,8 @@
 
 		<!-- Scripts -->
 		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="{{ asset('js/app.js') }}"></script>
 		@yield('head')
 	</head>
 	<body>

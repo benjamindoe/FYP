@@ -95,4 +95,28 @@ class User extends Authenticatable
 			return 0;
 		}
 	}
+
+	public function role()
+	{
+		$role = 'guest';
+		switch ($this->userLevel())
+		{
+			case 1:
+				return 'student';
+				break;
+			case 2:
+				return 'parent';
+				break;
+			case 3:
+				return 'staff';
+				break;
+			case 4:
+				return 'super';
+				break;
+			case 0:
+			default:
+				return 'guest';
+				break;
+		}
+	}
 }

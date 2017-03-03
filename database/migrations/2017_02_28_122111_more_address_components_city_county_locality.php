@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MakeAddressUnqiue extends Migration
+class MoreAddressComponentsCityCountyLocality extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,9 @@ class MakeAddressUnqiue extends Migration
     public function up()
     {
         Schema::table('address', function (Blueprint $table) {
-            $table->unique(['address_line_1', 'address_line_2', 'postcode'], 'address_line_1_postocode_unique');
+            $table->renameColumn('address_line_5', 'locality');
+            $table->string('city');
+            $table->string('county');
         });
     }
 
@@ -26,7 +28,8 @@ class MakeAddressUnqiue extends Migration
     public function down()
     {
         Schema::table('address', function (Blueprint $table) {
-            $table->dropUnique('address_line_1_postocode_unique');
+            $table->renameColumn('locality', 'address_line_5');
+            $table->dropColumn(['city', 'county']);
         });
     }
 }

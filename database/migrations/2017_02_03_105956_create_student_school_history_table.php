@@ -16,7 +16,7 @@ class CreateStudentSchoolHistoryTable extends Migration
         Schema::create('school_history', function (Blueprint $table) {
             $table->increments('id');
             $table->date("arrival_date");
-            $table->date("leaving_date");
+            $table->date("leaving_date")->nullable();
             $table->text("leaving_reason");
             $table->string("enrolment_mode");
             $table->timestamps();
