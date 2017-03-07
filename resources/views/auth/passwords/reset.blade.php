@@ -1,4 +1,4 @@
-@extends('layouts.no-drawer')
+@extends('layouts.auth')
 @section('title', 'Reset Password')
 @section('form-action', url('/password/reset'))
 @section('form-fields')

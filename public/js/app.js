@@ -1,5 +1,18 @@
 var ADDRESS_API = 'Ku4TrIm71k28VFeejy2fGQ7568';
 $(function() {
+	$boxes = $('table tbody .mdl-data-table__select');
+	$('thead .mdl-data-table__select input').change(function() {
+		if(this.checked) {
+			$boxes.each(function() {
+				this.MaterialCheckbox.check();
+			});
+		} else {
+			$boxes.each(function() {
+				this.MaterialCheckbox.uncheck();
+			});
+		}
+	});
+
 	$('.address-lookup__btn').click(function() {
 		$addressLookup = $('.address-lookup');
 		$addressLookup.find('#address').remove();

@@ -45,8 +45,8 @@ Route::group(['prefix' => 'schools', 'middleware' => 'auth.level:super'], functi
 		Route::any('/', 'StaffController@showSchoolStaffList');
 		Route::get('add', 'StaffController@showSchoolStaffAddForm');
 		Route::post('add', 'StaffController@addSchoolsStaff');
-		Route::get('{id}', 'StaffController@showSchoolsStaffProfile');
-		Route::get('{id}/edit', 'StaffController@showSchoolStaffEditForm');
+		Route::get('{username}', 'StaffController@showSchoolsStaffProfile');
+		Route::get('{username}/edit', 'StaffController@showSchoolStaffEditForm');
 		Route::put('{id}/edit', 'StaffController@edit');
 		Route::delete('{id}/delete', 'StaffController@delete');
 	});
@@ -56,6 +56,10 @@ Route::group(['prefix' => 'staff', 'middleware' => 'auth.explicit:staff'], funct
 	Route::get('/', 'StaffController@showStaffList');
 	Route::get('add', 'StaffController@showAddForm');
 	Route::post('add', 'StaffController@addStaff');
+	Route::get('{username}', 'StaffController@showStaffProfile');
+	Route::get('{username}/edit', 'StaffController@showEditForm');
+	Route::put('{id}/edit', 'StaffController@edit');
+	Route::delete('{id}/delete', 'StaffController@delete');
 });
 
 Route::group(['prefix' => 'school', 'middleware' => 'auth.explicit:staff'], function() {
@@ -69,9 +73,10 @@ Route::group(['prefix' => 'attendance'], function(){
 	
 });
 
-Route::group(['prefix' => 'class', 'middleware' => 'auth.level:staff'], function() {
+Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], function() {
 	Route::get('register', 'Controllre@method')->name('register');
 	Route::get('/', 'ClassController@listClasses');
+	Route::get('add', 'ClassController@showAddForm');
 });
 
 Route::group(['prefix' => 'vle', 'middleware' => 'auth.level:student'], function() {

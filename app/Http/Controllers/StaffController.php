@@ -16,24 +16,25 @@ class StaffController extends Controller
 	public function showSchoolStaffList(Request $request, int $urn)
 	{
 		$staff = SchooL::find($urn)->staff;
-		return view('staff.listviewer', ['url' => 'schools/'.$urn.'/staff/', 'staff' => $staff]);
+		return view('staff.listviewer', ['url' => 'schools/'.$urn.'/staff', 'staff' => $staff]);
 	}
 
 	public function showStaffList(Request $request)
 	{
-		$urn = Auth()->user()->staff->school_urn;
-		$staff = School::find($urn)->staff;
-		return view('staff.listviewer', ['url' => 'schools/'.$urn.'/staff/', 'staff' => $staff]);
+		$staff = $_ENV['school']->staff;
+		return view('staff.listviewer', ['url' => 'staff', 'staff' => $staff]);
 	}
 
-	public function showSchoolsStaffProfile(Request $request, int $urn, int $id)
+	public function showSchoolsStaffProfile(Request $request, int $urn, string $username)
 	{
-		return view();
+		$staff = User::where('username', $username)->first()->staff;
+		return 0;
 	}
 
-	public function showStaffProfile(Request $request, int $id)
+	public function showStaffProfile(Request $request, string $username)
 	{
-		# code...
+		$staff = User::where('username', $username)->first()->staff;
+		return 0;
 	}
 
 	public function showSchoolStaffAddForm(Request $request, int $urn)
@@ -46,42 +47,42 @@ class StaffController extends Controller
 		return view('staff.edit', ['roles' => Role::all(),  'url' => url('staff/add')]);
 	}
 
-	public function showSchoolStaffEditForm(Request $request, int $urn, int $id)
+	public function showSchoolStaffEditForm(Request $request, int $urn, string $username)
 	{
-		$staff = Staff::find($id);
-		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all(), 'url' => ('schools/'.$urn.'/staff/'.$id.'/edit')]);
+		$staff = User::where('username', $username)->first()->staff;
+		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all(), 'url' => ('schools/'.$urn.'/staff/'.$staff->id.'/edit')]);
 	}
 
-	public function showEditForm(Request $request, int $id)
+	public function showEditForm(Request $request, string $username)
 	{
-		$staff = Staff::find($id);
-		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all(), 'url' => 'staff/']);
+		$staff = User::where('username', $username)->first()->staff;
+		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all(), 'url' => 'staff/'.$staff->id]);
 	}
 
 	public function addSchoolsStaff(Request $request, int $urn)
 	{
 		$staff = $this->staffAdder($request, $urn);
-		return redirect('schools/'.$urn.'/staff/'.$staff->id);
+		return redirect('schools/'.$urn.'/staff/'.$staff->user->username);
 	}
 
 	public function addStaff(Request $request)
 	{
-		$urn = Auth()->user()->school_urn;
+		$urn = $_ENV['school']->getKey();
 		$staff = $this->staffAdder($request, $urn);
-		return redirect('staff/'.$staff->id);
+		return redirect('staff/'.$staff->user->username);
 	}
 
 	public function editSchoolStaff(Request $request, int $urn, int $id)
 	{
 		$staff = $this->staffEditor($request, $id, $urn);
-		return redirect('schools/'.$urn.'/staff/'.$id);
+		return redirect('schools/'.$urn.'/staff/'.$staff->user->username);
 	}
 
-	public function editStaff(Request $request, $id)
+	public function editStaff(Request $request, int $id)
 	{
-		$urn = Auth()->user()->school_urn;
+		$urn = $_ENV['school']->getKey();
 		$staff = $this->staffEditor($request, $id, $urn);
-		return redirect('staff/'.$staff->id);
+		return redirect('staff/'.$staff->user->username);
 	}
 
 	public function deleteSchoolStaff(Request $request, int $urn, int $id)

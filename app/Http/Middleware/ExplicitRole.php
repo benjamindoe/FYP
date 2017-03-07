@@ -22,6 +22,8 @@ class ExplicitRole
 
 			if(Auth::user()->role() === $role)
 			{
+				if(Auth::user()->staff !== null)
+					$_ENV['school'] = Auth::user()->staff->school;
 				return $next($request);
 			}
 			return abort(404);

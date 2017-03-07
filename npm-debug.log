@@ -1,0 +1,27 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'bugs' ]
+2 info using npm@4.1.2
+3 info using node@v7.6.0
+4 silly fetchPackageMetaData .
+5 silly fetchDirectoryPackageData .
+6 silly bugs url https://www.npmjs.org/package/
+7 verbose stack Error: spawn xdg-open ENOENT
+7 verbose stack     at exports._errnoException (util.js:1028:11)
+7 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:193:32)
+7 verbose stack     at onErrorNT (internal/child_process.js:359:16)
+7 verbose stack     at _combinedTickCallback (internal/process/next_tick.js:74:11)
+7 verbose stack     at process._tickCallback (internal/process/next_tick.js:98:9)
+8 verbose cwd /home/vagrant/fyp
+9 error Linux 4.4.0-51-generic
+10 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "bugs"
+11 error node v7.6.0
+12 error npm  v4.1.2
+13 error path xdg-open
+14 error code ENOENT
+15 error errno ENOENT
+16 error syscall spawn xdg-open
+17 error enoent spawn xdg-open ENOENT
+18 error enoent spawn xdg-open ENOENT
+18 error enoent This is most likely not a problem with npm itself
+18 error enoent and is related to npm not being able to find a file.
+19 verbose exit [ 1, true ]

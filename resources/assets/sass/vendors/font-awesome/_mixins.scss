@@ -25,17 +25,6 @@
           transform: scale($horiz, $vert);
 }
 
-@mixin fa-spin($speed) {
-  $speed: $speed + 0s;
-  -webkit-animation: fa-spin $speed infinite linear;
-          animation: fa-spin $speed infinite linear;
-}
-
-@mixin fa-pulse($speed) {
-  $speed: $speed + 0s;
-  -webkit-animation: fa-spin $speed infinite steps(8);
-          animation: fa-spin $speed infinite steps(8);
-}
 
 // Only display content to screen readers. A la Bootstrap 4.
 //

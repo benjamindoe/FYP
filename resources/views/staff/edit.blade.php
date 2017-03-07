@@ -9,7 +9,7 @@
 		@component('components.textfield', ['inputName' => 'username'])
 			@slot('value')
 				@if(isset($edit) && $edit)
-					{{ $staff->user()->username or '' }}
+					{{ $staff->user->username or '' }}
 				@endif
 			@endslot
 			Username
