@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolesTable extends Migration
+class AddFkClassAcademicYear extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->unsignedInteger('level')->primary();
-            $table->string('role')->unique();
-            $table->timestamps();
+        Schema::table('class', function(Blueprint $table) {
+            $table->foreign('academic_year')->references('academic_year')->on('academic_years')->onDelete('cascade');
         });
     }
 
@@ -27,6 +25,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        $table->dropForeign(['academic_year']);
     }
 }

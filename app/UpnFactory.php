@@ -2,7 +2,7 @@
 
 use App\Model\Upn;
 
-class UpnGenerator 
+class UpnFactory 
 {
 	private static $localAuth = 860;
 	private static $estNum = 1020;
@@ -12,7 +12,7 @@ class UpnGenerator
 	private $serial;
 	private $isTemp;
 
-	function __construct()
+	public function __construct()
 	{
 	}
 	private static $checkLetters = [
@@ -41,6 +41,12 @@ class UpnGenerator
 			'Z', // 22			
 	];
 
+	public static function Upn(string $upn, $isTemp = false)
+	{
+		$instance = new self();
+		$instance->upn = $upn;
+		$instance->isTemp = $isTemp;
+	}
 	public function generatePermanent($schoolYear)
 	{
 		$this->upn = '';
@@ -91,7 +97,7 @@ class UpnGenerator
 		}
 		$checkDigit = $checkDigit % count(self::$checkLetters);
 		$this->checkLetter = self::$checkLetters[$checkDigit];
-		$this->upn = $this->checkLetter . $this->upn;;
+		$this->upn = $this->checkLetter . $this->upn;
 	}
 
 	private function getPrevUpn()

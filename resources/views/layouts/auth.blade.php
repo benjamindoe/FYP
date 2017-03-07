@@ -1,4 +1,7 @@
-@extends('layouts.main')
+@extends ('layouts.base')
+@section ('header-classes', '')
+@section ('drawer', '')
+@section ('tabs', '')
 @section('content')
 	<div class="mdl-grid">
 		<div class="mdl-layout-spacer"></div>

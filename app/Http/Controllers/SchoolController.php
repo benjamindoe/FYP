@@ -29,12 +29,16 @@ class SchoolController extends Controller
 
 	public function showEditForm(Request $request, int $id = null)
 	{
-		if(Auth::user()->isStaff() && $id = null)
+		if(Auth::user()->staff)
 		{
-			dd('find related school');
+			$school = $_ENV['school'];
+			$url = url('/school/edit');
+		} else 
+		{
+			$school = School::find($id);
+			$url = url('schools/'.$id.'/edit');
 		}
-		$school = School::find($id);
-		return view('school.edit', ['title' => 'Edit School', 'url' => url('schools/edit/'.$id), 'school' => $school, 'edit' => true]);
+		return view('school.edit', ['title' => 'Edit School', 'url' => $url, 'school' => $school, 'edit' => true]);
 	}
 
 	public function add(Request $request)

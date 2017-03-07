@@ -1,4 +1,4 @@
-@extends('layouts.no-drawer')
+@extends('layouts.auth')
 @section('form-action', url('/password/email'))
 @section('form-fields')
 <div class="container">

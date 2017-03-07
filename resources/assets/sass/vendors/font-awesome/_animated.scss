@@ -2,20 +2,13 @@
 // --------------------------
 
 .#{$fa-css-prefix}-spin {
-  @include fa-spin(2);
+  -webkit-animation: fa-spin 2s infinite linear;
+          animation: fa-spin 2s infinite linear;
 }
 
 .#{$fa-css-prefix}-pulse {
-  @include fa-pulse(2);
-}
-
-@for $i from 1 to 4 {
-    .#{$fa-css-prefix}-spin-#{$i} {
-      @include fa-spin($i);
-    }
-    .#{$fa-css-prefix}-pulse-#{$i} {
-      @include fa-pulse($i);
-    }
+  -webkit-animation: fa-spin 1s infinite steps(8);
+          animation: fa-spin 1s infinite steps(8);
 }
 
 @-webkit-keyframes fa-spin {
@@ -38,7 +31,4 @@
     -webkit-transform: rotate(359deg);
             transform: rotate(359deg);
   }
-}
-.body {
-  color:white;
 }

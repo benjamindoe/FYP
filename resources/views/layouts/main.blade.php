@@ -1,5 +1,6 @@
 @extends('layouts.base')
-@section ('fixed-drawer-class', 'mdl-layout--fixed-drawer')
+@section('header-classes', 'mdl-layout--fixed-drawer')
+@section('tabs', '')
 @section('drawer')
 <div class="mdl-layout__drawer">
 	<header class="drawer-header">
@@ -10,11 +11,11 @@
 	@if(Auth::user()->isSuperAdmin())
 		<a class="mdl-navigation__link" href="{{ url('schools') }}">Schools</a>
 	@elseif(Auth::user()->staff !== null)
-		@if(Auth::user()->staff()->role == 'admin')
+		@if(Auth::user()->staff->role == 'admin')
 			<a class="mdl-navigation__link" href="{{ url('school') }}">School</a>
 			<a class="mdl-navigation__link" href="{{ url('staff') }}">Staff</a>
 			<a class="mdl-navigation__link" href="{{ url('class') }}">Classes</a>
-		@elseif(Auth::user()->staff()->role == 'teacher')
+		@elseif(Auth::user()->staff->role == 'teacher')
 			<a class="mdl-navigation__link" href="{{ url('class/'.$Auth::user()->staff()->class()) }}">Class</a>
 			<a class="mdl-navigation__link" href="{{ url('vle') }}">VLE</a>
 		@endif
