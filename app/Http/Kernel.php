@@ -54,5 +54,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'auth.level' => \App\Http\Middleware\UserLevel::class,
         'auth.explicit' => \App\Http\Middleware\ExplicitRole::class,
+        'auth.staff' => \App\Http\Middleware\ExplicitStaffRole::class,
     ];
 }

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-	<form action="{{ $url }}" method="post">
+	<form action="{{ url($url) }}" method="post">
 	@if(isset($edit) && $edit)
 		{{ method_field('PUT') }}
 	@endif

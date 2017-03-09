@@ -17,9 +17,9 @@ class CreateStudentTable extends Migration
             $table->increments('id');
             $table->string("legal_surname");
             $table->string("legal_forename");
-            $table->string("middle_names");
-            $table->string("preferred_surname");
-            $table->string("preferred_forename");
+            $table->string("middle_names")->nullable();
+            $table->string("preferred_surname")->nullable();
+            $table->string("preferred_forename")->nullable();
             $table->date("dob");
             $table->string("gender");
             $table->text("notes");

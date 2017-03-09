@@ -29,7 +29,9 @@ class AddTeacherFkToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['parent_id', 'student_id', 'staff_id']);
+            $table->dropForeign(['staff_id']);
+            $table->dropForeign(['parent_id']);
+            $table->dropForeign(['student_id']);
         });
     }
 }

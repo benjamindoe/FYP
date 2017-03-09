@@ -14,7 +14,7 @@ class AddFkClassAcademicYear extends Migration
     public function up()
     {
         Schema::table('class', function(Blueprint $table) {
-            $table->foreign('academic_year')->references('academic_year')->on('academic_years')->onDelete('cascade');
+            $table->foreign('academic_year')->references('id')->on('academic_years')->onDelete('cascade');
         });
     }
 
@@ -25,6 +25,8 @@ class AddFkClassAcademicYear extends Migration
      */
     public function down()
     {
-        $table->dropForeign(['academic_year']);
+        Schema::table('class', function(Blueprint $table) {
+            $table->dropForeign(['academic_year']);
+        });
     }
 }

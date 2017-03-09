@@ -26,10 +26,18 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::get('profile/{username}', 'Controllre@method');
 
+Route::group(['prefix' => 'students', 'middleware' => 'auth.explicit:staff'], function() {
+	Route::get('editor', 'StudentController@method');
+	Route::get('import/ATF', 'StudentController@method');
+	Route::get('import/CTF', 'StudentController@method');
+	Route::get('export/CTF', 'StudentController@method');
+	Route::get('add', 'StudentController@showAddForm');
+	Route::post('add', 'StudentController@add');
+});
 Route::group(['prefix' => 'student/{id}', 'middleware' => 'auth.level:student'], function() {
 	Route::get('/', 'Controllre@method');
-	Route::get('attendance/history', 'Controllre@method')->name('attendance');
-	Route::get('attainment/history', 'Controllre@method')->name('attainment');
+	Route::get('attendance/history', 'StudentController@method')->name('attendance');
+	Route::get('attainment/history', 'StudentController@method')->name('attainment');
 });
 
 Route::group(['prefix' => 'schools', 'middleware' => 'auth.level:super'], function() {
@@ -77,6 +85,7 @@ Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], funct
 	Route::get('register', 'Controllre@method')->name('register');
 	Route::get('/', 'ClassController@listClasses');
 	Route::get('add', 'ClassController@showAddForm');
+	Route::post('add', 'ClassController@addClass');
 });
 
 Route::group(['prefix' => 'vle', 'middleware' => 'auth.level:student'], function() {
@@ -84,4 +93,13 @@ Route::group(['prefix' => 'vle', 'middleware' => 'auth.level:student'], function
 	Route::get('{subject}', 'VleController@subjectDashboard');
 	Route::get('{subject}/{asset}', 'VleController@asset');
 	Route::get('{subject}/{asset}/download', 'VleController@download');
+});
+
+Route::group(['prefix' => 'academic-years', 'middleware' => 'auth.staff:admin'], function() {
+	Route::get('/', 'AcademicYearsController@overview');
+	Route::get('add', 'AcademicYearsController@showAddForm');
+	Route::get('edit', 'AcademicYearsController@showEditForm');
+	Route::post('add', 'AcademicYearsController@add');
+	Route::post('{}/edit', 'AcademicYearsController@edit');
+	Route::delete('delete', 'AcademicYearsController@edit');
 });
