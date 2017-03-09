@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAcademicYearTable extends Migration
+class AddSchoolHistoryStudentSchoolFks extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateAcademicYearTable extends Migration
      */
     public function up()
     {
-        Schema::create('academic_years', function (Blueprint $table) {
-            $table->increments('id');
-            $table->smallInteger('academic_year')->unsigned();
-            $table->date('year_start');
-            $table->date('year_end');
+        Schema::table('school_history', function (Blueprint $table) {
             $table->unsignedInteger('school_urn');
-            $table->timestamps();
-
+            $table->unsignedInteger('student_id');
             $table->foreign('school_urn')->references('unique_reference_number')->on('school');
+            $table->foreign('student_id')->references('id')->on('student');
         });
     }
 
@@ -32,6 +28,10 @@ class CreateAcademicYearTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('academic_years');
+        Schema::table('school_history', function (Blueprint $table) {
+            $table->dropForeign(['school_urn']);
+            $table->dropForeign(['student_id']);
+            $table->dropColumn(['school_urn', 'student_id']);
+        });
     }
 }

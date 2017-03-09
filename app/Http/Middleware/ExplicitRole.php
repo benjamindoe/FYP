@@ -15,7 +15,7 @@ class ExplicitRole
 	 * @param  \Closure  $next
 	 * @return mixed
 	 */
-	public function handle($request, Closure $next, string $role)
+	public function handle(Request $request, Closure $next, string $role)
 	{
 		if(Auth::check())
 		{
@@ -26,7 +26,7 @@ class ExplicitRole
 					$_ENV['school'] = Auth::user()->staff->school;
 				return $next($request);
 			}
-			return abort(404);
+			return abort(403);;
 		}
 		return redirect()->guest('login');
 	}

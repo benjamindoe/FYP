@@ -43,7 +43,7 @@ class UserLevel
 			{
 				return $next($request);
 			}
-			abort(403);
+			return abort(403);
 		}
 		return redirect()->guest('login');
 	}

@@ -1,4 +1,5 @@
 @extends('layouts.base')
+@section('title', $title)
 @section('header-classes', 'mdl-layout--fixed-drawer')
 @section('tabs', '')
 @section('drawer')

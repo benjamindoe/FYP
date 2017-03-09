@@ -14,7 +14,7 @@ class AddClassYearsColumns extends Migration
 	public function up()
 	{
 		Schema::table('class', function (Blueprint $table) {
-			$table->smallInteger('academic_year')->unsigned();
+			$table->unsignedInteger('academic_year');
 		});
 	}
 

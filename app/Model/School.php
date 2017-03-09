@@ -43,8 +43,27 @@ class School extends Model
 		return $this->hasMany('App\Model\Staff', 'school_urn', 'unique_reference_number');
 	}
 
+	/**
+	 * Get the classes of the school
+	 */
 	public function classes()
 	{
 		return $this->hasMany('App\Model\Classes', 'school_urn', 'unique_reference_number');
+	}
+
+	/**
+	 * Get the students of the school
+	 */
+	public function students()
+	{
+		return $this->belongsToMany('App\Model\Student', 'school_history', 'school_urn', 'student_id')->withPivot('arrival_date', 'leaving_date', 'leaving_reason');
+	}
+
+	/**
+	 * Get the academic years of the school
+	 */
+	public function academicYears()
+	{
+		return $this->hasMany('App\Model\AcademicYear', 'school_urn', 'unique_reference_number');
 	}
 }
