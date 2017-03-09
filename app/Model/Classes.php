@@ -13,9 +13,20 @@ class Classes extends Model
 	 */
 	protected $table = 'class';
 
+	/**
+	 * The attributes that aren't mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $guarded = [];
 
 	public function teachers()
 	{
-		return $this->belongsToMany('App\Model\Staff');
+		return $this->belongsToMany('App\Model\Staff', 'class_teacher', 'class_id', 'staff_id');
+	}
+
+	public function students()
+	{
+		return $this->hasMany('App\Model\Student', 'class_id');
 	}
 }

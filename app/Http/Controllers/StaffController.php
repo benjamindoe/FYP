@@ -15,14 +15,15 @@ class StaffController extends Controller
 
 	public function showSchoolStaffList(Request $request, int $urn)
 	{
-		$staff = SchooL::find($urn)->staff;
-		return view('staff.listviewer', ['url' => 'schools/'.$urn.'/staff', 'staff' => $staff]);
+		$school = School::find($urn);
+		$staff = $school->staff;
+		return view('staff.listviewer', ['url' => 'schools/'.$urn.'/staff', 'staff' => $staff, 'title' => $school->establishment_name.' Staff']);
 	}
 
 	public function showStaffList(Request $request)
 	{
 		$staff = $_ENV['school']->staff;
-		return view('staff.listviewer', ['url' => 'staff', 'staff' => $staff]);
+		return view('staff.listviewer', ['url' => 'staff', 'staff' => $staff, 'title' => 'School Staff']);
 	}
 
 	public function showSchoolsStaffProfile(Request $request, int $urn, string $username)

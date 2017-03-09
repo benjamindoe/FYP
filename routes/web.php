@@ -85,7 +85,10 @@ Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], funct
 	Route::get('register', 'Controllre@method')->name('register');
 	Route::get('/', 'ClassController@listClasses');
 	Route::get('add', 'ClassController@showAddForm');
-	Route::post('add', 'ClassController@addClass');
+	Route::post('add', 'ClassControler@add');
+	Route::get('{form}/edit', 'ClassController@showEditForm');
+	Route::put('{form}/edit', 'ClassControler@edit');
+	Route::delete('{form}/delete', 'ClassController@delete');
 });
 
 Route::group(['prefix' => 'vle', 'middleware' => 'auth.level:student'], function() {
