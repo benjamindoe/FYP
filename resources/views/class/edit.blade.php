@@ -59,16 +59,17 @@
 				<th>
 					@component('components.checkbox', ['labelClass' => 'mdl-data-table__select', 'id' => 'table-header']) @endcomponent
 				</th>
-				<th>Name</th>
-				<th>Year</th>
+				<th class="mdl-data-table__cell--non-numeric">Name</th>
+				<th class="mdl-data-table__cell--non-numeric">Year</th>
 			</thead>
 			<tbody>
 				@foreach($students as $student)
 					<tr>
 						<td>
-							@component('components.checkbox', ['labelClass' => 'mdl-data-table__select', 'id' => 'teachers['.$i.']', 'name'=>'teachers[]' ,'value' => $teacher->id]) @endcomponent
+							@component('components.checkbox', ['labelClass' => 'mdl-data-table__select', 'id' => 'students['.$i.']', 'name'=>'students[]' ,'value' => $teacher->id]) @endcomponent
 						</td>
-						<td>{{ $student->forename.' '.$student->surname }}</td>
+						<td class="mdl-data-table__cell--non-numeric">{{ $student->forename.' '.$student->surname }}</td>
+						<td class="mdl-data-table__cell--non-numeric">{{ $student->year_group }}</td>
 					</tr>
 				@endforeach
 			</tbody>

@@ -10,7 +10,7 @@ class ClassController extends Controller
 {
     public function listClasses(Request $request)
     {
-    	$classes = $_ENV['school']->classes;
+    	$classes = $_ENV['school']->classes->load('teachers');
     	return view('class.listviewer', ['classes' => $classes, 'url' => 'class', 'title' => 'Classes']);
     }
 
@@ -20,12 +20,12 @@ class ClassController extends Controller
     	return view('class.edit', ['url' => 'class/add', 'teachers' => $teachers, 'students' => [], 'title' => 'Add Class']);
     }
 
-    public function addClass(Request $request)
+    public function add(Request $request)
     {
         $classInfo = $request->only(['class_form', 'academic_year']);
         $teachers = $request->input('teachers');
-        $students = $request->input('teachers');
-        $class = Classes::create($classInfo);
+        $students = $request->input('students');
+        $class = $_ENV['school']->classes()->create($classInfo);
         if($teachers)
         {
             $class->teachers()->attach($teachers);
@@ -35,17 +35,19 @@ class ClassController extends Controller
             $students = Student::find($students);
             $class->students()->saveMany($students);
         }
-        $_ENV['school'];
+        return redirect('class');
     }
 
     public function showEditForm(Request $request, string $form)
     {
-		$class = $_ENV['school']->classes()->where('class_form', $form)->first();
+		$class = $_ENV['school']->classes()->where('class_form', $form)->with('teachers')->with('students')->first();
+
+    	dd($class);
+        return view('class.edit', ['url' => 'class/edit', 'teachers']);
     }
 
-    public function editClass(Request $request, string $form)
+    public function edit(Request $request, string $form)
     {
-		$class = $_ENV['school']->classes()->where('class_form', $form)->first();
-    	# code...
+        $class = $_ENV['school']->classes()->where('class_form', $form)->first();
     }
 }

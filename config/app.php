@@ -167,6 +167,7 @@ return [
          * Package Service Providers...
          */
         'GrahamCampbell\Exceptions\ExceptionsServiceProvider',
+        Felixkiss\UniqueWithValidator\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
