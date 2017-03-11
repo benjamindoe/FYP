@@ -11,14 +11,4 @@ $(function() {
 			});
 		}
 	});
-	$( ".datepicker" ).each(function() {
-		$(this).datepicker({
-			dateFormat: 'dd M yy',
-			changeMonth: true,
-			changeYear: true,
-			onSelect: function() {
-				$(this).parent().addClass('is-dirty');
-			}
-		});
-	});
 });

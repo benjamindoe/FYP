@@ -1,6 +1,7 @@
 <?php namespace App;
 
 use App\Model\Upn;
+use App\Model\AcademicYear;
 
 class UpnFactory 
 {
@@ -12,8 +13,9 @@ class UpnFactory
 	private $serial;
 	private $isTemp;
 
-	public function __construct()
+	public function __construct($admissionDate = null)
 	{
+		$this->setSchoolYear($admissionDate);
 	}
 	private static $checkLetters = [
 			'A', // 0
@@ -41,28 +43,37 @@ class UpnFactory
 			'Z', // 22			
 	];
 
+	private function setSchoolYear($admissionDate = null)
+	{
+		if(!$admissionDate)
+			$admissionDate = Carbon::now();
+
+		$this->schoolYear = substr(AcademicYear::where('year_start', '<=', $admissionDate)->where('year_end', '>=', $admissionDate)->first()->academic_year, -2);
+	}
+
 	public static function Upn(string $upn, $isTemp = false)
 	{
 		$instance = new self();
 		$instance->upn = $upn;
 		$instance->isTemp = $isTemp;
+		return $this;
 	}
-	public function generatePermanent($schoolYear)
+
+	public function generatePermanent()
 	{
 		$this->upn = '';
 		$this->isTemp = false;
-		$this->schoolYear = $schoolYear;
 		$prevUpn = $this->getPrevUpn();
 		$this->serial = empty($prevUpn) ? 1 : $prevUpn->serial_number + 1;
 		$this->buildUpn();
 		$this->getCheckLetter();
+		return $this;
 	}
 
-	public function generateTemp($schoolYear)
+	public function generateTemp()
 	{
 		$this->upn = '';
 		$this->isTemp = true;
-		$this->schoolYear = $schoolYear;
 		$prevUpn = $this->getPrevUpn();
 		if(empty($prevUpn))
 		{
@@ -81,6 +92,7 @@ class UpnFactory
 		$this->upn = substr($this->upn, 0, -1);
 		$this->getCheckLetter();
 		$this->upn .= self::$checkLetters[$lastDigit];
+		return $this;
 	}
 
 	private function buildUpn()
@@ -107,16 +119,18 @@ class UpnFactory
 
 	public function save()
 	{
-		$upn = new Upn;
+		$upn = Upn::find($this->upn);
+		if(!$upn)
+			$upn = new Upn;
 		$upn->upn = $this->upn;
 		$upn->check_letter = $this->checkLetter;
 		$upn->la_number = self::$localAuth;
 		$upn->establishment_number = self::$estNum;
 		$upn->year_code = $this->schoolYear;
-		$upn->serial_number = $this->$serial;
+		$upn->serial_number = $this->serial;
 		$upn->is_temp = $this->isTemp;
-
 		$upn->save();
+		return $this;
 	}
 
 	public function getUpn()

@@ -15,5 +15,7 @@ mix.sass('resources/assets/sass/app.scss', 'public/css')
 .js([
 	'resources/assets/js/vendors/jquery-ui.min.js',
 	'resources/assets/js/address.js',
+	'resources/assets/js/datepicker.js',
+	'resources/assets/js/upn-radio.js',
 	'resources/assets/js/table-checkbox.js',
 	], 'public/js/app.js');

@@ -17,7 +17,7 @@ class CreateStudentSchoolHistoryTable extends Migration
             $table->increments('id');
             $table->date("arrival_date");
             $table->date("leaving_date")->nullable();
-            $table->text("leaving_reason");
+            $table->text("leaving_reason")->nullable();
             $table->timestamps();
         });
     }
