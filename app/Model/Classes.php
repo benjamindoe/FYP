@@ -29,4 +29,10 @@ class Classes extends Model
 	{
 		return $this->hasMany('App\Model\Student', 'class_id');
 	}
+
+	public function academicYear()
+	{
+		return $this->belongsTo('App\Model\AcademicYear', 'academic_year', 'id');
+	}
+
 }

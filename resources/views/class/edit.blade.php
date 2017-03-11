@@ -8,7 +8,7 @@
 	</div>
 @endsection
 @section('content')
-	<form action="{{ url($url) }}" method="post">
+	<form action="{{ url()->current() }}" method="post">
 	@if(isset($edit) && $edit)
 		{{ method_field('PUT') }}
 	@endif
@@ -26,7 +26,13 @@
 			@endslot
 
 			@foreach($_ENV['school']->academicYears as $year)
-				<option value="{{ $year->id }}" {{ (old('academic_year') == $year->id ? 'selected':'') }}> {{ $year->academic_year }} </option>
+				<option value="{{ $year->id }}"
+					{{ (old('academic_year') === $year->id ||
+						(isset($class) && $class->academic_year === $year->id)
+						? 'selected'
+						: '') }} >
+					{{ $year->academic_year }}
+				</option>
 			@endforeach
 
 		@endcomponent
@@ -44,7 +50,13 @@
 				@foreach($teachers as $i => $teacher)
 					<tr>
 						<td>
-							@component('components.checkbox', ['labelClass' => 'mdl-data-table__select', 'id' => 'teachers['.$i.']', 'name'=>'teachers[]' ,'value' => $teacher->id]) @endcomponent
+							@component('components.checkbox', [
+								'labelClass' => 'mdl-data-table__select',
+								'id' => 'teachers['.$i.']',
+								'name'=>'teachers[]',
+								'value' => $teacher->id,
+								'checked' => isset($class) && in_array($teacher->id, $class->teachers->pluck('id')->toArray()) ? 'checked' : '',
+							]) @endcomponent
 						</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ $teacher->forename.' '.$teacher->surname }}</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ ucfirst($teacher->role) }}</td>
@@ -54,7 +66,7 @@
 		</table>
 	</section>
 	<section class="mdl-layout__tab-panel" id="students-tab">
-		<table>
+		<table class="mdl-data-table mdl-shadow--2dp">
 			<thead>
 				<th>
 					@component('components.checkbox', ['labelClass' => 'mdl-data-table__select', 'id' => 'table-header']) @endcomponent
@@ -66,9 +78,17 @@
 				@foreach($students as $student)
 					<tr>
 						<td>
-							@component('components.checkbox', ['labelClass' => 'mdl-data-table__select', 'id' => 'students['.$i.']', 'name'=>'students[]' ,'value' => $teacher->id]) @endcomponent
+							@component('components.checkbox', [
+								'labelClass' => 'mdl-data-table__select',
+								'id' => 'students['.$i.']',
+								'name'=>'students[]',
+								'value' => $student->id,
+								'checked' => isset($class) && in_array($student->id, $class->students->pluck('id')->toArray()) ? 'checked' : '',
+							]) @endcomponent
 						</td>
-						<td class="mdl-data-table__cell--non-numeric">{{ $student->forename.' '.$student->surname }}</td>
+						<td class="mdl-data-table__cell--non-numeric">
+							{{ !empty($student->preferred_forename) ? $student->preferred_forename : $student->legal_forename }} {{!empty($student->preferred_surname) ? $student->preferred_surname : $student->legal_surname }}
+						</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ $student->year_group }}</td>
 					</tr>
 				@endforeach

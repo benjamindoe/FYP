@@ -22,7 +22,7 @@ class CreateStudentTable extends Migration
             $table->string("preferred_forename")->nullable();
             $table->date("dob");
             $table->string("gender");
-            $table->text("notes");
+            $table->text("notes")->nullable('');
             $table->softDeletes();
             $table->timestamps();
         });

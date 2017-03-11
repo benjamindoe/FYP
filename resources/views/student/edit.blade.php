@@ -31,9 +31,9 @@
 			Middle Names
 		@endcomponent
 
-		@component('components.textfield', ['inputName' => 'preferred_forname'])
+		@component('components.textfield', ['inputName' => 'preferred_forename'])
 			@slot('value')
-				{{ $student->preferred_forname or '' }}
+				{{ $student->preferred_forename or '' }}
 			@endslot
 			Preferred Forename
 		@endcomponent
@@ -69,13 +69,33 @@
 			Year Group
 		@endcomponent
 
-		@component('components.textfield', ['inputName' => 'class_form'])
-			@slot('value')
-				{{ $student->arrival_date or '' }}
+		@component('components.dropdown', ['inputName' => 'class_id'])
+			@slot('label')
+				Class Form
 			@endslot
-			Class Form
+			@foreach($_ENV['school']->classes as $class)
+				<option value="{{ $class->id }}"
+					{{ (old('class_id') === $class->id ||
+						(isset($student) && $student->class_id === $class->id) 
+						? 'selected'
+						: '') }} >
+					{{ $class->class_form }} ({{$class->academicYear->academic_year}})
+				</option>
+			@endforeach
 		@endcomponent
+		<div class="upn-generator">
+			@component('components.radio-button', ['inputName' => 'upn', 'id' => 'permUpn', 'value' => 1])
+				Generate Permanent UPN
+			@endcomponent
 
+			@component('components.radio-button', ['inputName' => 'upn', 'id' => 'tempUpn', 'value' => 2])
+				Generate Temporary UPN
+			@endcomponent
+
+			@component('components.radio-button', ['inputName' => 'upn', 'id' => 'manualUpn', 'value' => 3])
+				Manually Add UPN
+			@endcomponent
+		</div>
 		@component('components.button')
 			Save
 		@endcomponent
