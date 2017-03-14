@@ -35,4 +35,9 @@ class Classes extends Model
 		return $this->belongsTo('App\Model\AcademicYear', 'academic_year', 'id');
 	}
 
+	public function attendance()
+	{
+		return $this->hasMany('App\Model\Attendance', 'class_id');
+	}
+
 }

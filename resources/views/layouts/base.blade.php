@@ -16,8 +16,10 @@
 		<link rel="stylesheet" href="{{asset('css/app.css')}}" />
 
 		<!-- Scripts -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 		<script src="{{ asset('js/app.js') }}"></script>
+		<script src="{{ asset('js/tester.js') }}"></script>
 		@yield('head')
 	</head>
 	<body>
@@ -27,18 +29,14 @@
 					<span class="mdl-layout-title">@yield('title')</span>
 					<div class="mdl-layout-spacer"></div>
 					<nav>
-			            @if (Auth::check())
-							<a class="mdl-navigation__link" href="{{ route('logout')}}">Logout</a>
-			            @else
-			                <a class="mdl-navigation__link" href="{{ url('/login') }}">Login</a>
-	    		        @endif
+						@yield('nav', '')
 					</nav>
 				</div>
 			@yield('tabs')
 			</header>
 			@yield('drawer')
-	  		<main class="mdl-layout__content">
-	  			<div class="page-content">
+			<main class="mdl-layout__content">
+				<div class="page-content">
 					@yield('content')
 				</div>
 			</main>

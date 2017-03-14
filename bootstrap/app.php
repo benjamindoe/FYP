@@ -41,6 +41,8 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+\Carbon\Carbon::setToStringFormat('d/m/Y');
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

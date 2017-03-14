@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\UpnGenerator;
 use App\User;
 
@@ -22,7 +21,7 @@ class HomeController extends Controller
 
 	public function dashboard()
 	{
-		$userLevel = Auth::user()->userLevel();
+		$userLevel = auth()->user()->userLevel();
 		switch ($userLevel)
 		{
 			case 'super':
@@ -39,9 +38,6 @@ class HomeController extends Controller
 				# code...
 				break;
 		}
-		$gen = new UpnGenerator;
-		$gen->generatePermanent(16);
-		$gen->generateTemp(16);
-		return view('default.index');
+		return view('default.index', ['title' => 'Dashboard']);
 	}
 }

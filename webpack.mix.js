@@ -10,12 +10,9 @@ const { mix } = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.copy('node_modules/dialog-polyfill/dialog-polyfill.js', 'resources/assets/vendors/dialog-polyfill.js');
 
 mix.sass('resources/assets/sass/app.scss', 'public/css')
-.js([
-	'resources/assets/js/vendors/jquery-ui.min.js',
-	'resources/assets/js/address.js',
-	'resources/assets/js/datepicker.js',
-	'resources/assets/js/upn-radio.js',
-	'resources/assets/js/table-checkbox.js',
-	], 'public/js/app.js');
+.scripts([
+	'resources/assets/js/vendors/*.js',
+	'resources/assets/js/*.js']);
