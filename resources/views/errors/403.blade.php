@@ -9,5 +9,5 @@
 			height:500px;
 		}
 	</style>
-	<img src="img/gandalf.png" />
+	<img src="{{asset('img/gandalf.png')}}" />
 @endsection

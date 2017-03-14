@@ -40,18 +40,18 @@ class User extends Authenticatable
 	 * @return integer student ID;
 	 * 
 	 */
-	public function isStudent()
+	public function student()
 	{
-		return $this->student_id;
+		return $this->belongsTo('App\Model\Student');
 	}
 
 	/**
-	 * Returns whether current user is a parent
-	 * @return integer parent ID
+	 * Returns whether current user is a guardian
+	 * @return integer guardian ID
 	 */
-	public function isParent()
+	public function guardian()
 	{
-		return $this->parent_id;
+		return $this->belongsTo('App\Model\Guardian', 'parent_id');
 	}
 
 	/**
@@ -82,7 +82,7 @@ class User extends Authenticatable
 		{
 			return 3;
 		}
-		else if ($this->isParent())
+		else if ($this->guardian !== null)
 		{
 			return 2;
 		}
@@ -105,7 +105,7 @@ class User extends Authenticatable
 				return 'student';
 				break;
 			case 2:
-				return 'parent';
+				return 'guardian';
 				break;
 			case 3:
 				return 'staff';

@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class AcademicYear extends Model
 {
@@ -43,5 +44,11 @@ class AcademicYear extends Model
 	public function school()
 	{
 		return $this->belongsTo('App\Model\School', 'school_urn', 'unique_reference_number');
+	}
+
+	public function current()
+	{
+		return $this->where('year_start', '<=', Carbon::now())
+					->where('year_end', '>=', Carbon::now());
 	}
 }

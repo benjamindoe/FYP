@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Staff extends Model
 {
 
-    /**
+	/**
 	 * The table associated with the model.
 	 *
 	 * @var string
@@ -42,6 +42,6 @@ class Staff extends Model
 	 */
 	public function classes()
 	{
-		return $this->belongsToMany('App\Model\Classes');
-	}	
+		return $this->belongsToMany('App\Model\Classes', 'class_teacher', 'class_id', 'staff_id');
+	}
 }

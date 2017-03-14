@@ -1,11 +1,10 @@
 @extends('layouts.main')
 @section('content')
 	<form action="{{ url($url) }}" method="post">
-	@if(isset($edit) && $edit)
+	@unless(request()->is('students/add'))
 		{{ method_field('PUT') }}
-	@endif
+	@endunless
 		{{ csrf_field() }}
-
 		@foreach ($errors->all() as $message) {
 			{{$message}}
 		@endforeach
@@ -57,7 +56,7 @@
 
 		@component('components.textfield', ['inputName' => 'arrival_date', 'id' => 'arrival_date_datepicker', 'inputClass' => 'datepicker'])
 			@slot('value')
-				{{ $student->arrival_date or '' }}
+				{{ isset($student) ? \Carbon\Carbon::parse($student->pivot->arrival_date) : '' }}
 			@endslot
 			Date of Arrival
 		@endcomponent
@@ -83,19 +82,23 @@
 				</option>
 			@endforeach
 		@endcomponent
-		<div class="upn-generator">
-			@component('components.radio-button', ['inputName' => 'upn', 'id' => 'permUpn', 'value' => 1])
-				Generate Permanent UPN
-			@endcomponent
+			@if(!isset($student) || $student->UPN->is_temp)
+				<div class="upn-generator">
+					@component('components.radio-button', ['inputName' => 'upn', 'id' => 'permUpn', 'value' => 1])
+						Generate Permanent UPN
+					@endcomponent
 
-			@component('components.radio-button', ['inputName' => 'upn', 'id' => 'tempUpn', 'value' => 2])
-				Generate Temporary UPN
-			@endcomponent
+					@unless(isset($student))
+						@component('components.radio-button', ['inputName' => 'upn', 'id' => 'tempUpn', 'value' => 2])
+							Generate Temporary UPN
+						@endcomponent
+					@endunless
 
-			@component('components.radio-button', ['inputName' => 'upn', 'id' => 'manualUpn', 'value' => 3])
-				Manually Add UPN
-			@endcomponent
-		</div>
+					@component('components.radio-button', ['inputName' => 'upn', 'id' => 'manualUpn', 'value' => 3])
+						Manually Add UPN
+					@endcomponent
+				</div>
+			@endif
 		@component('components.button')
 			Save
 		@endcomponent

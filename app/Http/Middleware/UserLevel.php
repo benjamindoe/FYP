@@ -29,7 +29,7 @@ class UserLevel
 				case 'staff':
 					$level = 3;
 					break;
-				case 'parent':
+				case 'guardian':
 					$level = 2;
 					break;
 				case 'student':

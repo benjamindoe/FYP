@@ -16,12 +16,17 @@
 			<a class="mdl-navigation__link" href="{{ url('school') }}">School</a>
 			<a class="mdl-navigation__link" href="{{ url('staff') }}">Staff</a>
 			<a class="mdl-navigation__link" href="{{ url('class') }}">Classes</a>
+			<a class="mdl-navigation__link" href="{{ url('students') }}">Students</a> 
 		@elseif(Auth::user()->staff->role == 'teacher')
-			<a class="mdl-navigation__link" href="{{ url('class/'.$Auth::user()->staff()->class()) }}">Class</a>
-			<a class="mdl-navigation__link" href="{{ url('vle') }}">VLE</a>
+			@foreach(Auth::user()->staff->classes as $class)
+				<a class="mdl-navigation__link" href="{{ url('class/'.$class->class_form) }}">{{$class->class_form}}</a>
+			@endforeach
+				<a class="mdl-navigation__link" href="{{ url('vle') }}">VLE</a>
 		@endif
-	@elseif(Auth::user()->isParent())
-		<a class="mdl-navigation__link" href="{{ url('student') }}">Student</a>
+	@elseif(Auth::user()->guardian)
+		@foreach(Auth::user()->guardian->students as $student)
+			<a class="mdl-navigation__link" href="{{ url('student/'.$student->id) }}">{{ !empty($student->preferred_forename) ? $student->preferred_forename : $student->legal_forename }}</a>
+		@endforeach
 		<a class="mdl-navigation__link" href="{{ url('') }}">Homework</a>
 		<a class="mdl-navigation__link" href="#">Link</a>
 	@else
@@ -30,6 +35,7 @@
 		<a class="mdl-navigation__link" href="#">Link</a>
 		<a class="mdl-navigation__link" href="#">Link</a>
 	@endif
+	<a class="mdl-navigation__link" href="{{ route('logout')}}">Logout</a>
 	</nav>
 </div>
 @endsection

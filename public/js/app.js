@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10350,6 +10350,34 @@ $(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {$(function () {
+	$(".attendance-code").keypress(function (e) {
+		nextRegistrationInput($(this));
+	});
+	$('.attendance-code').keydown(function (e) {
+		var code = e.keyCode || e.which;
+		if (code == '9') {
+			if (e.shiftKey) {
+				prevRegistrationInput($(this));
+			} else {
+				nextRegistrationInput($(this));
+			}
+			return false;
+		}
+	});
+});
+function nextRegistrationInput($this) {
+	$this.parents('tr').next().find('.attendance-code[classperiod=' + $this.attr('classperiod') + ']').focus();
+}
+function prevRegistrationInput($this) {
+	$this.parents('tr').prev().find('.attendance-code[classperiod=' + $this.attr('classperiod') + ']').focus();
+}
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function($) {$(function () {
 	$boxes = $('table tbody .mdl-data-table__select');
 	$('thead .mdl-data-table__select input').change(function () {
 		if (this.checked) {
@@ -10366,22 +10394,23 @@ $(function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function($) {$(function () {
-	$('#manualUpn').change(function () {
+	$('input[type=radio][name=upn]').change(function () {
 		if (this.value == 3) {
 			$('.upn-generator').append('<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label manual-upn-textfield">' + '<input class="mdl-textfield__input" type="text" pattern="[A-HJ-NP-RT-Z][0-9]{12}" name="manual-upn-textfield" id="manual-upn-textfield" value="">' + '<label class="mdl-textfield__label" for="manual-upn-textfield">Unique Pupil Number</label>' + '</div>');
 		} else {
 			$('.manual-upn-textfield').remove();
 		}
+		componentHandler.upgradeDom();
 	});
 });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -10895,21 +10924,22 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 });
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
+__webpack_require__(6);
 __webpack_require__(1);
 __webpack_require__(2);
+__webpack_require__(5);
 __webpack_require__(4);
 __webpack_require__(3);
-module.exports = __webpack_require__(6);
+module.exports = __webpack_require__(7);
 
 
 /***/ })

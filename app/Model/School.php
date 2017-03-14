@@ -56,7 +56,7 @@ class School extends Model
 	 */
 	public function students()
 	{
-		return $this->belongsToMany('App\Model\Student', 'school_history', 'school_urn', 'student_id')->withPivot('arrival_date', 'leaving_date', 'leaving_reason');
+		return $this->belongsToMany('App\Model\Student', 'school_history', 'school_urn', 'student_id')->wherePivot('leaving_date', null)->withPivot('arrival_date', 'leaving_date', 'leaving_reason');
 	}
 
 	/**

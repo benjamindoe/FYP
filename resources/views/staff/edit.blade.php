@@ -1,16 +1,15 @@
 @extends('layouts.main')
 @section('content')
-	<form action="{{ url($url) }}" method="post">
+	<form action="{{ url()->current() }}" method="post">
 	@if(isset($edit) && $edit)
 		{{ method_field('PUT') }}
 	@endif
 		{{ csrf_field() }}
 
+		<input type="hidden" name="id" value="{{ $staff->id }}">
 		@component('components.textfield', ['inputName' => 'username'])
 			@slot('value')
-				@if(isset($edit) && $edit)
-					{{ $staff->user->username or '' }}
-				@endif
+				{{ $staff->user->username or '' }}
 			@endslot
 			Username
 		@endcomponent
@@ -43,13 +42,16 @@
 			Surname
 		@endcomponent
 
-		<select name="role" id="role">
+		@component('components.dropdown', ['inputName' => 'role'])
 			@foreach($roles as $key => $role)
-				<option value="{{ $role }}">{{ ucfirst($role) }}</option>
+				<option value="{{ $role }}" {{ (old('role') === $role ||
+						(isset($staff) && $staff->role === $role)
+						? 'selected'
+						: '') }}>{{ ucfirst($role) }}</option>
 			@endforeach
-		</select>
+		@endcomponent
 
-		@foreach ($errors->all() as $message) {
+		@foreach ($errors->all() as $message)
 			{{$message}}
 		@endforeach
 		@component('components.button')

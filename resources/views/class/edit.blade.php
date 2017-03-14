@@ -87,7 +87,7 @@
 							]) @endcomponent
 						</td>
 						<td class="mdl-data-table__cell--non-numeric">
-							{{ !empty($student->preferred_forename) ? $student->preferred_forename : $student->legal_forename }} {{!empty($student->preferred_surname) ? $student->preferred_surname : $student->legal_surname }}
+							{{ $student->full_name }}
 						</td>
 						<td class="mdl-data-table__cell--non-numeric">{{ $student->year_group }}</td>
 					</tr>
