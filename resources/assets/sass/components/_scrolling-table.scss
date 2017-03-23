@@ -1,0 +1,30 @@
+.mdl-data-table__cell--non-numeric.static-headcol {
+	position: absolute;
+	top: auto;
+	left: 0;
+	z-index: 999;
+	background: white;
+	width: 160px;
+	border-right: 1px solid rgba(0,0,0,0.12);
+	padding-top: 14px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	
+}
+td.mdl-data-table__cell--non-numeric.static-headcol {
+	height: 49px;
+}
+.scrolling-table {
+	position: static;
+	margin-left: 159px;
+	&__form {
+		width: 100%;
+	}
+	&_wrapper {
+		position: relative;
+	}
+	&__scroller {
+		max-width: 100%;
+		overflow-x: auto;
+	}
+}

@@ -1,5 +1,5 @@
-@extends('layouts.base');
-@section('content');
+@extends('layouts.base')
+@section('content')
 	<h1>403</h1>
 	<style type="text/css">
 		body {

@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Staff extends Model
 {
@@ -42,6 +43,17 @@ class Staff extends Model
 	 */
 	public function classes()
 	{
-		return $this->belongsToMany('App\Model\Classes', 'class_teacher', 'class_id', 'staff_id');
+		return $this->belongsToMany('App\Model\Classes', 'class_teacher', 'staff_id', 'class_id');
 	}
+
+		/**
+	 * Get the classes of the teacher
+	 */
+	public function currentClasses()
+	{
+		return $this->classes()->whereHas('academicYear', function($query) {
+			$query 	->where('year_start', '<=', Carbon::today())
+					->where('year_end', '>=', Carbon::today());;
+		});
+	}	
 }

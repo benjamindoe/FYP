@@ -73,4 +73,29 @@ class Student extends Model
 		return $this->legal_forename.' '.$this->legal_surname;
 	}
 
+	public function schools()
+	{
+		return $this->belongsToMany('App\Model\School', 'school_history', 'student_id', 'school_urn')->withPivot('arrival_date', 'leaving_date', 'leaving_reason');
+	}
+
+	public function currentSchool()
+	{
+		return $this->belongsToMany('App\Model\School', 'school_history', 'student_id', 'school_urn')->wherePivot('leaving_date', null)->withPivot('arrival_date', 'leaving_date', 'leaving_reason');
+	}
+
+	public function getSchoolAttribute($value)
+	{
+		return $this->currentSchool->first();
+	}
+
+	public function attainment()
+	{
+		return $this->hasMany('App\Model\AttainmentRecord');
+	}
+
+	public function attainmentTargets()
+	{
+		return $this->hasMany('App\Model\AttainmentTarget');
+	}
+
 }

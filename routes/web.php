@@ -21,10 +21,7 @@ Auth::routes();
 
 Route::get('logout', 'Auth\LoginController@logout');
 
-Route::group(['middleware' => 'auth'], function()
-{
-	Route::any('dashboard', 'HomeController@dashboard')->name('home');
-});
+Route::any('dashboard', 'HomeController@dashboard')->name('home')->middleware('auth');
 
 Route::get('profile/{username}', 'Controllre@method');
 
@@ -41,8 +38,8 @@ Route::group(['prefix' => 'students', 'middleware' => 'auth.staff:admin'], funct
 Route::group(['prefix' => 'student/{id}', 'middleware' => 'auth.level:student'], function()
 {
 	Route::get('/', 'StudentController@showStudentProfile');
-	Route::get('attendance/history', 'StudentController@method')->name('attendance');
-	Route::get('attainment/history', 'StudentController@method')->name('attainment');
+	Route::get('attendance/history', 'StudentController@method');
+	Route::get('attainment/history', 'StudentController@method');
 	Route::get('edit', 'StudentController@showEditForm')->middleware('auth.staff:admin');
 	Route::put('edit', 'StudentController@edit')->middleware('auth.staff:admin');
 });
@@ -98,6 +95,16 @@ Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], funct
 {
 	Route::get('{form}/register', 'ClassController@showRegForm');
 	Route::post('{form}/register', 'ClassController@classRegistration');
+	Route::get('{form}/homework', 'ClassController@listStudents');
+	Route::get('{form}/classlist', 'ClassController@listStudents');
+	Route::get('{form}/attainment', 'AttainmentController@showClassAttainmentRecord');
+	Route::group(['prefix' => '{form}/attainment'], function()
+	{
+		Route::get('/', 'AttainmentController@redirectToSubject');
+		Route::get('{subject}', 'AttainmentController@showClassAttainmentRecord');
+		Route::post('{subject}', 'AttainmentController@saveClassAttainment');
+
+	});
 	Route::group(['middleware' => 'auth.staff:admin'], function()
 	{
 		Route::get('add', 'ClassController@showAddForm');
@@ -131,4 +138,9 @@ Route::group(['prefix' => 'academic-years', 'middleware' => 'auth.staff:admin'],
 Route::group(['prefix' => 'year-group', 'middleware' => 'auth.staff:admin'], function()
 {
 	Route::get('calculate', 'YearGroupController@calculate');
+});
+
+Route::group(['prefix' => 'attainment', 'middleware' => 'auth.staff:admin'], function()
+{
+	Route::get('', 'AttainmentController@showAdminForm');
 });
