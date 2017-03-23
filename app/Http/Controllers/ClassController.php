@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\Model\Classes;
 use App\Model\Student;
@@ -88,45 +89,68 @@ class ClassController extends Controller
 		return back();
 	}
 
-	public function showRegForm(Request $request, $classForm)
+	public function showRegForm(Request $request, $classForm, $toastMessage = null)
 	{
-		$class = $_ENV['school']->classes()->where('class_form', $classForm)->whereHas('academicYear', function($query) {
-			$query
-				->where('year_start', '<=', Carbon::now())
-				->where('year_end', '>=', Carbon::now());
-		})->with(['students' => function($query) {
-			$query->with(['attendance' => function($query) {
-					$query->where('date', Carbon::now());
-				}]);
-		}])->first();
-		$codes = AttendanceCode::all();
-		return view('class.register', ['class' => $class, 'periods' => RegistrationPeriod::all(), 'title' => $class->class_form.' Registration', 'codes' => $codes]);
+		$date = $request->input('date') ?? null;
+		$class = $this->findCurrentClasses($classForm, $date)->first();
+		return view('class.register', ['class' => $class, 'periods' => RegistrationPeriod::all(), 'title' => $class->class_form.' Registration', 'codes' => AttendanceCode::all(), 'toastMessage' => $toastMessage]);
 	}
 
 	public function classRegistration(Request $request, $classForm)
 	{
-		$date = $request->input('date') !== null ? Carbon::parse($request->input('date')) : Carbon::now();
+		$this->validator($request->all())->validate();
+		$class = $_ENV['school']->classes()->where('class_form', $classForm)->whereHas('academicYear', function($query)
+		{
+			$query->whereDate('year_start', '<=', Carbon::today())->whereDate('year_end'  , '>=', Carbon::today());
+		})->first();
+
+		$date = $request->input('date') !== null ? Carbon::parse($request->input('date')) : Carbon::today();
 		foreach($request->input('student') as $studentId => $student)
 		{
-			dump($student);
 			foreach ($student as $key => $register)
 			{
 				if(!empty($register['code']))
-					$record = Attendance::firstOrnew(['date' => $date, 'period' => $key]);
-
-				dump($record);
+				{
+					$record = Student::find($studentId)->attendance()->firstOrnew(['date' => $date, 'period' => $key]);
+					$record->code = $register['code'];
+					$record->notes = $register['notes'];
+					$record->class_id = $class->id;
+					$record->save();
+				}
 			}
 		}
-		dd($request->all());
-		return;
+		return $this->showRegForm($request, $classForm, 'Saved');
 	}
 
 	protected function classFinder($year, $form)
 	{
 		return $_ENV['school']->classes()->where('class_form', $form)
-			->whereHas('academicYear', function($query) use ($year) {
+			->whereHas('academicYear', function($query) use ($year)
+			{
 				$query->where('academic_year', $year);
 			});
+	}
+
+	public function findCurrentClasses($classForm = null, $date = null)
+	{
+		$date = empty($date) ? Carbon::today() : Carbon::parse($date);
+
+		$class = $_ENV['school']->classes();
+		if($classForm)
+			$class->where('class_form', $classForm);
+
+		$class->whereHas('academicYear', function($query)
+		{
+			$query->where('year_start', '<=', Carbon::today())
+				  ->where('year_end'  , '>=', Carbon::today());
+		})->with([ 'students' => function($query) use ($date)
+		{
+			$query->with(['attendance' => function($query) use ($date)
+			{
+				$query->whereDate('date', $date);
+			}]);
+		}]);
+		return $class;
 	}
 
 	/**
@@ -138,7 +162,7 @@ class ClassController extends Controller
 	protected function validator(array $data)
 	{
 		return Validator::make($data, [
-			'class_form'=> 'required|unique_with:class, academic_year',
+			'student.*.*.code'=> 'exists:attendance_codes,code',
 		]);
 	}
 }

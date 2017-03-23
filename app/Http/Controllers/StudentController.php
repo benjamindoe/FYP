@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Student;
 use Carbon\Carbon;
 use App\UpnFactory;
+use App\Model\RegistrationPeriod;
 
 class StudentController extends Controller
 {
@@ -13,22 +14,34 @@ class StudentController extends Controller
 	{
 		$user = auth()->user();
 		switch(auth()->user()->role())
-			{
-				case 'student':
-					$student = auth()->user()->student;
-					break;
-				case 'guardian':
-					$student = auth()->user()->guardian->students()->findOrFail($id);
-					break;
-				case 'staff':
-					$student = $_ENV['school']->students()->findOrFail($id);
-					break;
-				default:
-					abort(404);
-					break;
-			}
-		dd($student);
-		return view('student.profile');
+		{
+			case 'student':
+				$student = auth()->user()->student()->with('attendance');
+				break;
+			case 'guardian':
+				$student = auth()->user()->guardian->students()->with('attendance')->findOrFail($id);
+				break;
+			case 'staff':
+				$student = $_ENV['school']->students()->with('attendance')->findOrFail($id);
+				break;
+			default:
+				abort(404);
+				break;
+		}
+		$possiblePeriodsYear = $this->attendancePeriods($student);
+		$weekStart = Carbon::parse('monday this week');
+		$monthStart = Carbon::parse('first day of this month');
+		$possiblePeriodsWeek = $this->attendancePeriods($student, $weekStart);
+		$possiblePeriodsMonth = $this->attendancePeriods($student, $monthStart);
+		//
+		$studentAttendanceBuilder = $student->attendance->whereIn('code', ['/', 'L', '\\'])->where('date', '<', Carbon::today());
+		$studentYear = $studentAttendanceBuilder->count();
+		$studentWeek = $studentAttendanceBuilder->where('date', '>=', $weekStart)->count();
+		$studentMonth = $studentAttendanceBuilder->where('date', '>=', $monthStart)->count();
+		$yearPercentage = $studentYear / $possiblePeriodsYear;
+		$weekPercentage = $studentWeek / $possiblePeriodsWeek;
+		$monthPercentage = $studentMonth / $possiblePeriodsMonth;
+		return view('student.profile', ['student' => $student, 'attendanceYear' => $yearPercentage, 'attendanceWeek' => $weekPercentage, 'attendanceMonth' => $monthPercentage]);
 	}
 	public function listStudents(Request $request)
 	{
@@ -86,5 +99,16 @@ class StudentController extends Controller
 			->students()
 			->updateExistingPivot($student->id, ['arrival_date' => $arrivalDate]);
 		return redirect('student/'.$student->id);
+	}
+
+	private function attendancePeriods($student, Carbon $dt = null)
+	{
+		$dt = $dt ?? $student->school->academicYears()->current()->first()->year_start;
+		$dt2 = Carbon::today();
+		$days = $dt->diffInWeekdays($dt2);
+		$possiblePeriods = $days * RegistrationPeriod::count();
+		$impossibleAttendance = $student->attendance->whereIn('code', ['D, X, Y, Z, #'])->count();
+		$possiblePeriods -= $impossibleAttendance;
+		return $possiblePeriods;
 	}
 }

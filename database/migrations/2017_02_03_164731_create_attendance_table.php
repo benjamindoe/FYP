@@ -19,7 +19,7 @@ class CreateAttendanceTable extends Migration
             $table->integer('class_id')->unsigned();
             $table->date('date');
             $table->char('period', 2); //AM/PM
-            $table->char('status', 1);
+            $table->char('code', 1);
             $table->integer('minutes_late')->nullable();
             $table->string('notes');
             $table->timestamps();

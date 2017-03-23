@@ -46,9 +46,9 @@ class AcademicYear extends Model
 		return $this->belongsTo('App\Model\School', 'school_urn', 'unique_reference_number');
 	}
 
-	public function current()
+	public function scopeCurrent()
 	{
-		return $this->where('year_start', '<=', Carbon::now())
-					->where('year_end', '>=', Carbon::now());
+		return $this->where('year_start', '<=', Carbon::today())
+					->where('year_end', '>=', Carbon::today());
 	}
 }

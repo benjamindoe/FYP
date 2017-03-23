@@ -40,4 +40,10 @@ class Classes extends Model
 		return $this->hasMany('App\Model\Attendance', 'class_id');
 	}
 
+	public function scopeCurrent()
+	{
+		return $this->whereHas('academicYear', function($query) {
+			$query->current();
+		});
+	}
 }

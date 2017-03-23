@@ -2,17 +2,19 @@
 @import "helpers/variables";
 
 // Components
+@import "components/attendance-code";
+@import "components/buttons";
 @import "components/datepicker";
 @import "components/error-message";
-@import "components/fab";
 @import "components/mdl-card";
-@import "components/attendance-code";
+@import "components/navigation";
 
 // Layout
 @import "layout/body";
 
 
 // Base
+@import "base/typography";
 
 // Pages
 

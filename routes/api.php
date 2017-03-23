@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::any('/register', function (Request $request) {
+	return response()->json(['success' => true, 'tag id' => $request->input('tagid')]);
+})->middleware('cors');

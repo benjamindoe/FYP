@@ -36,6 +36,7 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            'cors'
         ],
     ];
 
@@ -56,5 +57,6 @@ class Kernel extends HttpKernel
         'auth.level' => \App\Http\Middleware\UserLevel::class,
         'auth.explicit' => \App\Http\Middleware\ExplicitRole::class,
         'auth.staff' => \App\Http\Middleware\ExplicitStaffRole::class,
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 }
