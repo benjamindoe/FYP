@@ -14,6 +14,7 @@ class AddAttainmentFks extends Migration
 	public function up()
 	{
 		Schema::table('attainment_record', function (Blueprint $table) {
+			$table->unsignedInteger('grade')->change();
 			$table->foreign('grade')->references('code')->on('attainment_grades');
 		});
 
@@ -31,10 +32,11 @@ class AddAttainmentFks extends Migration
 	{
 		Schema::table('attainment_record', function (Blueprint $table) {
 			$table->dropForeign(['grade']);
+			$table->string('grade')->change();
 		});
 
 		Schema::table('attainment_targets', function(Blueprint $table) {
-			$table->dropForeign(['grade']);
+			$table->string('grade')->change();
 		});
 	}
 }

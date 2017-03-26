@@ -3,30 +3,45 @@
 <div class="mdl-grid demo-content">
 	<div class="student-attendance mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
 		<div class="mdl-layout-spacer"></div>
-		<div class="percentage-chart" style="text-align: center;">
-			<div class="percentage-chart__container" data-percentage="{{$attendanceWeek}}" style="width: 200px; height: 200px; position:relative;"></div>
+		<div class="percentage-chart student-attendance__week mdl-cell mdl-cell--4-col">
+			<div class="percentage-chart__container" data-percentage="{{$attendancePercent['week']}}"></div>
 			<span class="percentage-chart__label">
 				Attendance this Week
 			</span>
 		</div>
 		<div class="mdl-layout-spacer"></div>
-		<div class="percentage-chart" style="text-align: center;">
-			<div class="percentage-chart__container" data-percentage="{{$attendanceYear}}" style="width: 200px; height: 200px; position:relative;"></div>
+		<div class="percentage-chart student-attendance__year mdl-cell mdl-cell--4-col">
+			<div class="percentage-chart__container" data-percentage="{{$attendancePercent['year']}}"></div>
 			<span class="percentage-chart__label">
 				Attendance this Year
 			</span>
 		</div>
 		<div class="mdl-layout-spacer"></div>
-		<div class="percentage-chart" style="text-align: center;">
-			<div class="percentage-chart__container" data-percentage="{{$attendanceMonth}}" style="width: 200px; height: 200px; position:relative;"></div>
+		<div class="percentage-chart student-attendace__month mdl-cell mdl-cell--4-col">
+			<div class="percentage-chart__container" data-percentage="{{$attendancePercent['month']}}"></div>
 			<span class="percentage-chart__label">
 				Attendance this Month
 			</span>
 		</div>
-		<div class="mdl-layout-spacer"></div>
 	</div>
-	<div class="student-attainment mdl-shadow--2dp mdl-card mdl-cell mdl-cell--8-col">
-		<canvas style="width:400px; height: 300px;" class="chartjs" id="attainment-chart" data-chart-label="['Aug', 'Sept', 'Oct', 'Nov', 'Dec', 'Jan']" data-chart="[1,2,3,4,5,6]"></canvas>
+	<div class="student-attainment mdl-shadow--2dp mdl-card mdl-cell mdl-cell--8-col mdl-tabs mdl-js-tabs">
+		<div class="mdl-tabs__tab-bar">
+			@foreach($attainment['student']->pluck('subject.name')->unique() as $key => $subject)
+				<a href="#{{$subject}}-panel" class="mdl-tabs__tab @unless($key != 0) is-active @endunless ">{{$subject}}</a>
+			@endforeach
+		</div>
+		@foreach($attainment['student']->pluck('subject.name')->unique() as $key => $subject)
+			<div class="mdl-tabs__panel @unless($key != 0) is-active @endunless " id="{{$subject}}-panel">
+				<canvas
+					style="width:5px; height: 3px"
+					class="chartjs" id="attainment-chart-{{$subject}}"
+					data-chart-yaxis='["A", "B", "C", "D", "E", "F"]'
+					data-chart-labels='["Aug", "Sept", "Oct", "Nov", "Dec", "Jan"]'
+					data-chart="{{ $attainment['student']->where('subject.name', $subject)->pluck('attainmentGrade.precedence')->toJson() }}"
+					data-chart-target="{{$attainment['target']->where('subject.name', $subject)->pluck('attainmentGrade.precedence')->first()}}"
+				></canvas>
+			</div>
+		@endforeach
 	</div>
 	<div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
 		<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">

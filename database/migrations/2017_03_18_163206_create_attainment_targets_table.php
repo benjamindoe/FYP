@@ -17,7 +17,7 @@ class CreateAttainmentTargetsTable extends Migration
 			$table->increments('id');
 			$table->unsignedInteger('subject_id');
 			$table->unsignedInteger('student_id');
-			$table->string('grade');
+			$table->unsignedInteger('grade');
 			$table->timestamps();
 		});
 	}
