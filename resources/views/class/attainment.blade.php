@@ -77,26 +77,32 @@
 				<tbody>
 					@foreach($class->students as $student)
 						<tr>
-							<td class="mdl-data-table__cell--non-numeric static-headcol"> {{ $student->full_name }} </td>
+							<td class="mdl-data-table__cell--non-numeric static-headcol">
+								<a href="{{ url('student/'.$student->id) }}"> {{ $student->full_name }} </a>
+							</td>
 							<td class="mdl-data-table__cell--non-numeric">
-								<input
-									type="text"
-									name="student[{{ $student->id }}][target]"
-									class="attainment-grade"
-									value="{{ $student->attainmentTargets->first()->grade or null }}" >
+								<select name="student[{{ $student->id }}][target]" class="attainment-grade">
+									<option value="">----------</option>
+									@php
+										$target = $student->attainmentTargets->first()->grade ?? null;
+									@endphp
+									@foreach($grades as $grade)
+										<option value="{{$grade->id}}" @if($target == $grade->id) selected @endif >{{$grade->code}}</option>
+									@endforeach
+								</select>
 							</td>
 							@foreach($periods as $period)
 								@php //setting the value
 									$componentVal = $student->attainment->where('period', $period->id)->first();
-									$grade = $componentVal->grade ?? null;
+									$studGrade = $componentVal->grade ?? null;
 								@endphp
 								<td class="mdl-data-table__cell--non-numeric attainment">
-									<input
-										type="text"
-										name="student[{{ $student->id }}][{{ $period->id }}][grade]"
-										class="attainment-grade"
-										attainmentPeriod="{{$period->id}}"
-										value="{{$grade}}" >
+									<select name="student[{{ $student->id }}][{{ $period->id }}][grade]" class="attainment-grade" attainmentPeriod="{{$period->id}}">
+										<option value="">----------</option>
+										@foreach($grades as $grade)
+											<option value="{{$grade->id}}" @if($studGrade == $grade->id) selected @endif >{{$grade->code}}</option>
+										@endforeach
+									</select>
 								</td>
 							@endforeach
 							</td>

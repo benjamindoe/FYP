@@ -21,7 +21,7 @@ class AttainmentController extends Controller
 	public function showClassAttainmentRecord(Request $request, $classForm, $subject, $message = null)
 	{
 		$curSubject = Subject::where('name', $subject)->first();
-		return view('class.attainment', ['class' => $this->getClass($classForm, $curSubject->id)->first(), 'periods' => AttainmentPeriod::all(), 'subjects' => Subject::all(), 'curSubject' => $curSubject, 'toastMessage' => $message]);
+		return view('class.attainment', ['class' => $this->getClass($classForm, $curSubject->id)->first(), 'periods' => AttainmentPeriod::all(), 'subjects' => Subject::all(), 'curSubject' => $curSubject, 'toastMessage' => $message, 'grades' => AttainmentGrade::orderBy('precedence', 'desc')->get()]);
 	}
 
 	public function saveClassAttainment(Request $request, $classForm, $subject)
@@ -50,7 +50,7 @@ class AttainmentController extends Controller
 
 	public function showAdminForm(Request $request)
 	{
-		return view('admin.attainment', ['grades' => AttainmentGrade::orderBy('precedence')->get()]);
+		return view('admin.attainment', ['grades' => AttainmentGrade::orderBy('precedence', 'desc')->get()]);
 	}
 
 	private function getClass($classForm, $subjectId)

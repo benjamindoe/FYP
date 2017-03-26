@@ -7,6 +7,8 @@ use App\Model\Student;
 use Carbon\Carbon;
 use App\UpnFactory;
 use App\Model\RegistrationPeriod;
+use App\Model\AttainmentGrade;
+use App\Model\AttainmentPeriod;
 
 class StudentController extends Controller
 {
@@ -33,16 +35,24 @@ class StudentController extends Controller
 		$monthStart = Carbon::parse('first day of this month');
 		$possiblePeriodsWeek = $this->attendancePeriods($student, $weekStart);
 		$possiblePeriodsMonth = $this->attendancePeriods($student, $monthStart);
-		//
+
 		$studentAttendanceBuilder = $student->attendance->whereIn('code', ['/', 'L', '\\'])->where('date', '<', Carbon::today());
 		$studentYear = $studentAttendanceBuilder->count();
 		$studentWeek = $studentAttendanceBuilder->where('date', '>=', $weekStart)->count();
 		$studentMonth = $studentAttendanceBuilder->where('date', '>=', $monthStart)->count();
-		$yearPercentage = $studentYear / $possiblePeriodsYear;
-		$weekPercentage = $studentWeek / $possiblePeriodsWeek;
-		$monthPercentage = $studentMonth / $possiblePeriodsMonth;
-		return view('student.profile', ['student' => $student, 'attendanceYear' => $yearPercentage, 'attendanceWeek' => $weekPercentage, 'attendanceMonth' => $monthPercentage]);
+		$percentage['year'] = $studentYear / $possiblePeriodsYear;
+		$percentage['week'] = $studentWeek / $possiblePeriodsWeek;
+		$percentage['month'] = $studentMonth / $possiblePeriodsMonth;
+
+		$attainment['grades'] = AttainmentGrade::all()->pluck('code');
+		$attainment['periods'] = AttainmentPeriod::all()->pluck('name');
+		$attainment['student'] = $student->attainment()->whereHas('attainmentPeriod', function($query) {
+			$query->orderBy('milestone', 'asc');
+		})->with('attainmentGrade')->with('subject')->get();
+		$attainment['target'] =  $student->attainmentTargets()->with('attainmentGrade')->with('subject')->get();
+		return view('student.profile', ['student' => $student, 'attendancePercent' => $percentage, 'attainment' => $attainment]);
 	}
+
 	public function listStudents(Request $request)
 	{
 		$query = $request->input();
