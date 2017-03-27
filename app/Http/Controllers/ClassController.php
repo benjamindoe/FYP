@@ -105,6 +105,8 @@ class ClassController extends Controller
 		})->first();
 
 		$date = $request->input('date') !== null ? Carbon::parse($request->input('date')) : Carbon::today();
+		if($date->isWeekend())
+			return $this->showRegForm($request, $classForm, $date.' is not a valid school day');
 		foreach($request->input('student') as $studentId => $student)
 		{
 			foreach ($student as $key => $register)

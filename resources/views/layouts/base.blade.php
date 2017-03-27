@@ -14,7 +14,7 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- Styles -->
-	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-red.min.css" />
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-red.min.css" />
 	<link rel="stylesheet" href="{{asset('css/app.css')}}" />
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

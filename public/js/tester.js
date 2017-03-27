@@ -14,7 +14,7 @@ $(function() {
     $('.chartjs').each(function() {
         var yAxis = $(this).data('chart-yaxis');
         var grades = $(this).data('chart');
-        var avgGrades = $(this).data('chart-Average');
+        var avgGrades = $(this).data('chart-average');
         var targetGrade = yAxis.slice(0);
         targetGrade.fill($(this).data('chart-target'));
         new Chart($(this), {
@@ -22,6 +22,27 @@ $(function() {
             data: {
                 labels: $(this).data('chart-labels'),
                 datasets: [{
+                    label: "Target",
+                    fill: false,
+                    lineTension: 0,
+                    backgroundColor: "#fff",
+                    borderColor: "#E91E63",
+                    borderCapStyle: 'butt',
+                    borderJoinStyle: 'round',
+                    borderDash:[15,15],
+                    pointBorderColor: "#E91E63",
+                    pointBackgroundColor: "#E91E63",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 1,
+                    pointRadius: 3,
+                    pointHitRadius: 10,
+                    data: targetGrade,
+                    spanGaps: true
+                },
+                {
                     label: "Progress",
                     fill: false,
                     lineTension: 0,
@@ -42,15 +63,15 @@ $(function() {
                     data:grades,
                 },
                 {
-                    label: "Target",
+                    label: "Year Average",
                     fill: false,
                     lineTension: 0,
                     backgroundColor: "#fff",
-                    borderColor: "#E91E63",
+                    borderColor: "#00E676",
                     borderCapStyle: 'butt',
                     borderJoinStyle: 'round',
-                    pointBorderColor: "#E91E63",
-                    pointBackgroundColor: "#E91E63",
+                    pointBorderColor: "#00E676",
+                    pointBackgroundColor: "#00E676",
                     pointBorderWidth: 1,
                     pointHoverRadius: 5,
                     pointHoverBackgroundColor: "rgba(75,192,192,1)",
@@ -58,7 +79,7 @@ $(function() {
                     pointHoverBorderWidth: 1,
                     pointRadius: 3,
                     pointHitRadius: 10,
-                    data: targetGrade,
+                    data: avgGrades,
                     spanGaps: true
                 }]
             },

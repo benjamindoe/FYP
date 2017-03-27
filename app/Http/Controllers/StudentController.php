@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Model\Student;
 use Carbon\Carbon;
 use App\UpnFactory;
 use App\Model\RegistrationPeriod;
-use App\Model\AttainmentGrade;
+use App\Model\AttainmentAverage;
 use App\Model\AttainmentPeriod;
+use App\Model\AttainmentGrade;
+use App\Model\Student;
 
 class StudentController extends Controller
 {
@@ -30,9 +31,10 @@ class StudentController extends Controller
 				abort(404);
 				break;
 		}
-		$possiblePeriodsYear = $this->attendancePeriods($student);
 		$weekStart = Carbon::parse('monday this week');
 		$monthStart = Carbon::parse('first day of this month');
+
+		$possiblePeriodsYear = $this->attendancePeriods($student);
 		$possiblePeriodsWeek = $this->attendancePeriods($student, $weekStart);
 		$possiblePeriodsMonth = $this->attendancePeriods($student, $monthStart);
 
@@ -40,16 +42,26 @@ class StudentController extends Controller
 		$studentYear = $studentAttendanceBuilder->count();
 		$studentWeek = $studentAttendanceBuilder->where('date', '>=', $weekStart)->count();
 		$studentMonth = $studentAttendanceBuilder->where('date', '>=', $monthStart)->count();
-		$percentage['year'] = $studentYear / $possiblePeriodsYear;
-		$percentage['week'] = $studentWeek / $possiblePeriodsWeek;
-		$percentage['month'] = $studentMonth / $possiblePeriodsMonth;
+		$percentage['year'] = division($studentYear, $possiblePeriodsYear);
+		$percentage['week'] = division($studentWeek, $possiblePeriodsWeek);
+		$percentage['month'] = division($studentMonth, $possiblePeriodsMonth);
 
 		$attainment['grades'] = AttainmentGrade::all()->pluck('code');
 		$attainment['periods'] = AttainmentPeriod::all()->pluck('name');
-		$attainment['student'] = $student->attainment()->whereHas('attainmentPeriod', function($query) {
-			$query->orderBy('milestone', 'asc');
-		})->with('attainmentGrade')->with('subject')->get();
 		$attainment['target'] =  $student->attainmentTargets()->with('attainmentGrade')->with('subject')->get();
+	
+		$attainment['student'] = $student->attainment()->whereHas('attainmentPeriod', function($query) {
+			$query->where('milestone', '<=', Carbon::today());
+		})->with(['attainmentPeriod' => function($query) {
+			$query->orderBy('milestone', 'asc');
+		}])->with('attainmentGrade')->with('subject')->get();
+
+		$attainment['averages'] = AttainmentAverage::whereHas('attainmentPeriod', function($query) {
+			$query->where('milestone', '<=', Carbon::today());
+		})->with(['attainmentPeriod' => function($query) {
+				$query->orderBy('milestone', 'asc');
+		}])->with('attainmentGrade')->with('subject')->get();
+
 		return view('student.profile', ['student' => $student, 'attendancePercent' => $percentage, 'attainment' => $attainment]);
 	}
 
