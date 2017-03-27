@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\AcademicYear;
 use App\Model\AttainmentGrade;
 use App\Model\AttainmentPeriod;
 use App\Model\AttainmentRecord;
@@ -21,7 +22,9 @@ class AttainmentController extends Controller
 	public function showClassAttainmentRecord(Request $request, $classForm, $subject, $message = null)
 	{
 		$curSubject = Subject::where('name', $subject)->first();
-		return view('class.attainment', ['class' => $this->getClass($classForm, $curSubject->id)->first(), 'periods' => AttainmentPeriod::all(), 'subjects' => Subject::all(), 'curSubject' => $curSubject, 'toastMessage' => $message, 'grades' => AttainmentGrade::orderBy('precedence', 'desc')->get()]);
+		$curSchoolYear = AcademicYear::current()->first();
+		$periods = AttainmentPeriod::whereBetween('milestone', [$curSchoolYear->year_start, $curSchoolYear->year_end])->get();
+		return view('class.attainment', ['class' => $this->getClass($classForm, $curSubject->id)->first(), 'periods' => $periods, 'subjects' => Subject::all(), 'curSubject' => $curSubject, 'toastMessage' => $message, 'grades' => AttainmentGrade::orderBy('precedence', 'desc')->get()]);
 	}
 
 	public function saveClassAttainment(Request $request, $classForm, $subject)

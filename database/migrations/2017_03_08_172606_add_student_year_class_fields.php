@@ -14,7 +14,7 @@ class AddStudentYearClassFields extends Migration
     public function up()
     {
         Schema::table('student', function (Blueprint $table) {
-            $table->smallInteger('year_group');
+            $table->unsignedInteger('year_group')->nullable();
             $table->unsignedInteger('class_id')->nullable();
 
             $table->foreign('class_id')->references('id')->on('class');

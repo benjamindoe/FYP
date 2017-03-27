@@ -24,4 +24,9 @@ class AttainmentRecord extends Model
     {
     	return $this->belongsTo('App\Model\Subject');
     }
+
+    public function student()
+    {
+        return $this->belongsTo('App\Model\Student');
+    }
 }
