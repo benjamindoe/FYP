@@ -1,11 +1,10 @@
-var ADDRESS_API = 'Ku4TrIm71k28VFeejy2fGQ7568';
 $(function() {
 	$('.address-lookup__btn').click(function() {
 		$addressLookup = $('.address-lookup');
 		$addressLookup.find('#address').remove();
 		$addressLookup.find('.error').remove();
 		var postcode = $addressLookup.find('.mdl-textfield__input').val();
-		$addressLookup.append('<span class="spinner"><i class="fa fa-circle-o-notch fa-spin-1 fa-3x fa-fw"></i><span class="sr-only">Loading...</span></spin>');
+		$addressLookup.find('.spinner').addClass('is-active');
 		$.get(
 			'https://api.getaddress.io/v2/uk/' + postcode,
 			{
@@ -23,7 +22,7 @@ $(function() {
 			$addressLookup.append('<span class="error">Invalid Postcode</span>');
 		})
 		.always(function() {
-			$addressLookup.find('.spinner').remove();
+			$addressLookup.find('.spinner').removeClass('is-active');
 		});
 		return false;
 	});
