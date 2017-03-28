@@ -57,7 +57,10 @@
 			<h2 class="mdl-card__title-text">Student Info</h2>
 		</div>
 		<div class="mdl-card__supporting-text mdl-card--expand mdl-color-text--grey-600">
-
+		<p>Date of Birth: {{ $student->dob }}</p>
+		<p>Class: {{ $student->class->class_form }}</p>
+		<p>Year Group: {{ $student->yearGroup->group }}</p>
+		<p>Key Stage: {{ $student->yearGroup->keystage }}</p>
 		</div>
 	</div>
 </div>

@@ -24,4 +24,9 @@ class Guardian extends Model
 	{
 		return $this->belongsToMany('App\Model\Student', 'student_parent', 'student_id', 'parent_id');
 	}
+
+	public function unopenedFiles()
+	{
+		return $this->hasMany('App\Model\UnopenedFile');
+	}
 }

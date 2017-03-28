@@ -85,7 +85,8 @@ class StudentController extends Controller
 
 	public function add(Request $request)
 	{
-		$info = $request->except('_token', 'upn', 'manual-upn-textfield', 'arrival_date');
+		validate_password($request->only(['password', 'password_confirmation']));
+		$info = $request->except('_token', 'upn', 'manual-upn-textfield', 'arrival_date', 'username', 'password', 'password_confirmation');
 		$info['dob'] = Carbon::createFromFormat('d/m/Y', $info['dob']);
 		$arrivalDate = Carbon::createFromFormat('d/m/Y', $request->input('arrival_date'));
 		$upn = new UpnFactory($arrivalDate);
@@ -106,24 +107,40 @@ class StudentController extends Controller
 		}
 		$info['upn'] = $upn->getUpn();
 		$student = Student::create($info);
+		$user = createUser($request->only(['username', 'password']));
+		$student->user()->save($user);
 		$_ENV['school']->students()->attach($student->id, ['arrival_date' => $arrivalDate]);
 		return redirect('student/'.$student->id);
 	}
 
 	public function edit(Request $request, $id)
 	{
-		$info = $request->except('_token', 'upn', 'manual-upn-textfield', 'arrival_date');
+		$info = $request->except('_token', 'upn', 'manual-upn-textfield', 'arrival_date', 'username', 'password', 'password_confirmation');
 		$info['dob'] = Carbon::createFromFormat('d/m/Y', $info['dob']);
 		$student = $_ENV['school']->students()->findOrFail($id);
-		$student->update($info);
 		$arrivalDate = Carbon::createFromFormat('d/m/Y', $request->input('arrival_date'));
 		$_ENV['school']
 			->students()
 			->updateExistingPivot($student->id, ['arrival_date' => $arrivalDate]);
+		$userInfo['username'] = $request->input('username');
+		if (!empty($request->input('password')))
+		{
+			validate_password($request->only(['password', 'password_confirmation']));
+			$userInfo['password'] = $request->input('password');
+		}
+		if($student->user)
+		{
+			$userInfo['password'] = bcrpyt($userInfo['password']);
+			$student->user()->update($userInfo);
+		} else {
+			$user = createUser($request->only(['username', 'password']));
+			$student->user()->save($user);
+		}
+		$student->update($info);
 		return redirect('student/'.$student->id);
 	}
 
-	private function attendancePeriods($student, Carbon $dt = null)
+	protected function attendancePeriods($student, Carbon $dt = null)
 	{
 		$dt = $dt ?? $student->school->academicYears()->current()->first()->year_start;
 		$dt2 = Carbon::today();

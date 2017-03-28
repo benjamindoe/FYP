@@ -3,7 +3,7 @@
 @section('tabs')
 	<div class="mdl-layout__tab-bar mdl-js-ripple-effect">
 		@foreach($subjects as $subject)
-			<a href="{{$subject->name}}" class="mdl-layout__tab @if($subject->name == $curSubject->name) is-active @endif">{{$subject->name}}</a>
+			<a href="{{strtolower($subject->name)}}" class="mdl-layout__tab @if($subject->name == $curSubject->name) is-active @endif">{{$subject->name}}</a>
 		@endforeach
 	</div>
 @endsection

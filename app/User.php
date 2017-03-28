@@ -119,4 +119,9 @@ class User extends Authenticatable
 				break;
 		}
 	}
+
+	public function unopenedResources()
+	{
+		return $this->hasMany('App\Model\UnopenedResource');
+	}
 }
