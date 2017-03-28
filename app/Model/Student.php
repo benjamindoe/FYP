@@ -98,4 +98,13 @@ class Student extends Model
 		return $this->hasMany('App\Model\AttainmentTarget');
 	}
 
+	public function user()
+	{
+		return $this->hasOne('App\User');
+	}
+
+	public function yearGroup()
+	{
+		return $this->belongsTo('App\Model\YearGroup', 'year_group');
+	}
 }

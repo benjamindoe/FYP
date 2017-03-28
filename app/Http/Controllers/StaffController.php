@@ -114,7 +114,7 @@ class StaffController extends Controller
 
 		$staffInfo = $request->only(['forename', 'surname']);
 		$userInfo['username'] = $request->only(['username']);
-		if (isset('password') && !empty('password'))
+		if (!empty($request->input('password')))
 			$userInfo['password'] = $request->input('password');
 
 		$staff = $this->staffFinder($request->input('id'), $urn);
@@ -142,7 +142,7 @@ class StaffController extends Controller
 
 		if($request->input('role') !== null)
 			$staff->role = $request->input('role');
-		$user = $this->createUser($userInfo);
+		$user = createUser($userInfo);
 		$staff->user()->save($user);
 		$staff->save();
 		return $staff;
@@ -177,14 +177,6 @@ class StaffController extends Controller
 			'forename'	=> 'required',
 			'surname'	=> 'required',
 		]);
-	}
-
-	protected function createUser(array $data)
-	{
-		return User::create([
-			'username' => $data['username'],
-			'password' => bcrypt($data['password'])
-			]);
 	}
 
 }

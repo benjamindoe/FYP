@@ -25,26 +25,26 @@ Route::any('dashboard', 'HomeController@dashboard')->name('home')->middleware('a
 
 Route::get('profile/{username}', 'Controllre@method');
 
-Route::group(['prefix' => 'students', 'middleware' => 'auth.staff:admin'], function()
+Route::group(['prefix' => 'students', 'middleware' => 'auth.staff:admin'], function ()
 {
 	Route::get('import/ATF', 'StudentController@method');
 	Route::get('import/CTF', 'StudentController@method');
 	Route::get('export/CTF', 'StudentController@method');
 	Route::get('add', 'StudentController@showAddForm');
 	Route::post('add', 'StudentController@add');
+	Route::get('{id}/edit', 'StudentController@showEditForm');
+	Route::put('{id}/edit', 'StudentController@edit');
 	Route::get('/', 'StudentController@listStudents');
 });
 
-Route::group(['prefix' => 'student/{id}', 'middleware' => 'auth.level:student'], function()
+Route::group(['prefix' => 'student/{id}', 'middleware' => 'auth.level:student'], function ()
 {
 	Route::get('/', 'StudentController@showStudentProfile');
 	Route::get('attendance/history', 'StudentController@method');
 	Route::get('attainment/history', 'StudentController@method');
-	Route::get('edit', 'StudentController@showEditForm')->middleware('auth.staff:admin');
-	Route::put('edit', 'StudentController@edit')->middleware('auth.staff:admin');
 });
 
-Route::group(['prefix' => 'schools', 'middleware' => 'auth.level:super'], function()
+Route::group(['prefix' => 'schools', 'middleware' => 'auth.level:super'], function ()
 {
 	Route::any('/', 'SchoolController@showSchoolsList');
 	Route::get('add', 'SchoolController@showAddForm');
@@ -53,7 +53,7 @@ Route::group(['prefix' => 'schools', 'middleware' => 'auth.level:super'], functi
 	Route::get('{id}/edit', 'SchoolController@showEditForm');
 	Route::put('{id}/edit', 'SchoolController@edit');
 	Route::delete('{id}/delete', 'SchoolController@delete');
-	Route::group(['prefix' => '{urn}/staff'], function()
+	Route::group(['prefix' => '{urn}/staff'], function ()
 	{
 		Route::any('/', 'StaffController@showSchoolStaffList');
 		Route::get('add', 'StaffController@showSchoolStaffAddForm');
@@ -65,7 +65,7 @@ Route::group(['prefix' => 'schools', 'middleware' => 'auth.level:super'], functi
 	});
 });
 
-Route::group(['prefix' => 'staff', 'middleware' => 'auth.explicit:staff'], function()
+Route::group(['prefix' => 'staff', 'middleware' => 'auth.explicit:staff'], function ()
 {
 	Route::get('/', 'StaffController@showStaffList');
 	Route::get('add', 'StaffController@showAddForm');
@@ -76,36 +76,27 @@ Route::group(['prefix' => 'staff', 'middleware' => 'auth.explicit:staff'], funct
 	Route::delete('{id}/delete', 'StaffController@delete');
 });
 
-Route::group(['prefix' => 'school', 'middleware' => 'auth.explicit:staff'], function()
+Route::group(['prefix' => 'school', 'middleware' => 'auth.explicit:staff'], function ()
 {
 	Route::get('/', 'SchoolController@showSchoolInfo');
 	Route::get('edit', 'SchoolController@showEditForm');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth.staff:admin'], function()
-{
-	//Route::get();
-});
-Route::group(['prefix' => 'attendance'], function()
-{
-	
-});
-
-Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], function()
+Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], function ()
 {
 	Route::get('{form}/register', 'ClassController@showRegForm');
 	Route::post('{form}/register', 'ClassController@classRegistration');
 	Route::get('{form}/homework', 'ClassController@listStudents');
 	Route::get('{form}/classlist', 'ClassController@listStudents');
 	Route::get('{form}/attainment', 'AttainmentController@showClassAttainmentRecord');
-	Route::group(['prefix' => '{form}/attainment'], function()
+	Route::group(['prefix' => '{form}/attainment'], function ()
 	{
 		Route::get('/', 'AttainmentController@redirectToSubject');
 		Route::get('{subject}', 'AttainmentController@showClassAttainmentRecord');
 		Route::post('{subject}', 'AttainmentController@saveClassAttainment');
 
 	});
-	Route::group(['middleware' => 'auth.staff:admin'], function()
+	Route::group(['middleware' => 'auth.staff:admin'], function ()
 	{
 		Route::get('add', 'ClassController@showAddForm');
 		Route::post('add', 'ClassController@add');
@@ -116,15 +107,15 @@ Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], funct
 	});
 });
 
-Route::group(['prefix' => 'vle', 'middleware' => 'auth.level:student'], function()
+Route::group(['prefix' => 'classcloud', 'middleware' => 'auth.level:student'], function ()
 {
-	Route::get('/', 'VleController@dashboard');
-	Route::get('{subject}', 'VleController@subjectDashboard');
-	Route::get('{subject}/{asset}', 'VleController@asset');
-	Route::get('{subject}/{asset}/download', 'VleController@download');
+	Route::get('/', 'ClassCloudController@dashboard');
+	Route::get('/{form}', 'ClassCloudController@classDashboard');
+	Route::get('{form}/{subject}', 'ClassCloudController@subjectDashboard');
+	Route::get('{form}/{subject}/{resource}', 'ClassCloudController@resource');
 });
 
-Route::group(['prefix' => 'academic-years', 'middleware' => 'auth.staff:admin'], function()
+Route::group(['prefix' => 'academic-years', 'middleware' => 'auth.staff:admin'], function ()
 {
 	Route::get('/', 'AcademicYearsController@overview');
 	Route::get('add', 'AcademicYearsController@showAddForm');
@@ -135,12 +126,18 @@ Route::group(['prefix' => 'academic-years', 'middleware' => 'auth.staff:admin'],
 });
 
 
-Route::group(['prefix' => 'year-group', 'middleware' => 'auth.staff:admin'], function()
+Route::group(['prefix' => 'year-group', 'middleware' => 'auth.staff:admin'], function ()
 {
 	Route::get('calculate', 'YearGroupController@calculate');
 });
 
-Route::group(['prefix' => 'attainment', 'middleware' => 'auth.staff:admin'], function()
+Route::group(['prefix' => 'attainment', 'middleware' => 'auth.staff:admin'], function ()
 {
 	Route::get('', 'AttainmentController@showAdminForm');
+});
+
+Route::group(['prefix' => 'file', 'middleware' => 'auth'], function () 
+{
+	Route::get('{filename}', 'FileController@getFile');
+	Route::post('upload', 'FileController@uploadFile');
 });

@@ -18,11 +18,11 @@
 			<a class="mdl-navigation__link" href="{{ url('class') }}"><i class="material-icons">&#xE86E;</i> Classes</a>
 			<a class="mdl-navigation__link" href="{{ url('students') }}"><i class="material-icons">&#xE80C;</i> Students</a> 
 		@elseif(Auth::user()->staff->role == 'teacher')
-			@foreach(Auth::user()->staff->currentClasses as $class)
+			@foreach(Auth::user()->staff->classes as $class)
 				<a class="mdl-navigation__link" href="{{ url('class/'.$class->class_form.'/register') }}"><i class="material-icons">&#xE85D;</i> {{$class->class_form}} Register</a>
 				<a class="mdl-navigation__link" href="{{ url('class/'.$class->class_form.'/attainment') }}"><i class="material-icons">&#xE85C;</i> {{$class->class_form}} Attainment</a>
 			@endforeach
-				<a class="mdl-navigation__link" href="{{ url('vle') }}"><i class="material-icons">cloud_upload</i> VLE</a>
+				<a class="mdl-navigation__link" href="{{ url('vle') }}"><i class="material-icons">cloud_upload</i> ClassCloud</a>
 		@endif
 	@elseif(Auth::user()->guardian)
 		@foreach(Auth::user()->guardian->students as $student)

@@ -41,7 +41,7 @@ class Staff extends Model
 	/**
 	 * Get the classes of the teacher
 	 */
-	public function classes()
+	public function allClasses()
 	{
 		return $this->belongsToMany('App\Model\Classes', 'class_teacher', 'staff_id', 'class_id');
 	}
@@ -49,9 +49,9 @@ class Staff extends Model
 		/**
 	 * Get the classes of the teacher
 	 */
-	public function currentClasses()
+	public function classes()
 	{
-		return $this->classes()->whereHas('academicYear', function($query) {
+		return $this->allClasses()->whereHas('academicYear', function($query) {
 			$query 	->where('year_start', '<=', Carbon::today())
 					->where('year_end', '>=', Carbon::today());;
 		});

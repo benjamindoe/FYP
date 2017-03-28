@@ -68,6 +68,25 @@
 			Year Group
 		@endcomponent
 
+		@component('components.textfield', ['inputName' => 'username'])
+			@slot('value')
+				{{ $student->user->username or '' }}
+			@endslot
+			Username
+		@endcomponent
+
+		@component('components.textfield', ['inputName' => 'password', 'type' => 'password'])
+			@slot('value')
+			@endslot
+			Password
+		@endcomponent
+
+		@component('components.textfield', ['inputName' => 'password_confirmation', 'type' => 'password'])
+			@slot('value')
+			@endslot
+			Confirm Password
+		@endcomponent
+
 		@component('components.dropdown', ['inputName' => 'class_id'])
 			@slot('label')
 				Class Form
