@@ -1,5 +1,8 @@
 @extends('layouts.main')
 @section('content')
+	<script type="text/javascript">
+		var ADDRESS_API = "{{ $_ENV['ADDRESS_API'] }}";
+	</script>
 	<form action="{{ url($url) }}" method="post">
 	@if(isset($edit) && $edit)
 		{{ method_field('PUT') }}
@@ -66,6 +69,7 @@
 			@component('components.button', ['class' => 'address-lookup__btn'])
 				Find Address
 			@endcomponent
+				<div class="spinner mdl-spinner mdl-js-spinner"></div>
 				@if ($errors->has('address'))
 					<span class="error">
 						{{ $errors->first('address') }}

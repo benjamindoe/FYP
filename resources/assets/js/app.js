@@ -16,3 +16,5 @@ require('./custom/chart');
 // const app = new Vue({
 //     el: '#app'
 // });
+
+dialogPolyfill.registerDialog();

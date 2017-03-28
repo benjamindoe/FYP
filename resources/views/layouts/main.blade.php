@@ -22,13 +22,13 @@
 				<a class="mdl-navigation__link" href="{{ url('class/'.$class->class_form.'/register') }}"><i class="material-icons">&#xE85D;</i> {{$class->class_form}} Register</a>
 				<a class="mdl-navigation__link" href="{{ url('class/'.$class->class_form.'/attainment') }}"><i class="material-icons">&#xE85C;</i> {{$class->class_form}} Attainment</a>
 			@endforeach
-				<a class="mdl-navigation__link" href="{{ url('vle') }}"><i class="material-icons">cloud_upload</i> ClassCloud</a>
+				<a class="mdl-navigation__link" href="{{ url('classcloud') }}"><i class="material-icons">cloud_upload</i> ClassCloud</a>
 		@endif
 	@elseif(Auth::user()->guardian)
 		@foreach(Auth::user()->guardian->students as $student)
 			<a class="mdl-navigation__link" href="{{ url('student/'.$student->id) }}"><i class="material-icons">&#xE85C;</i> {{ $student->full_name }}</a>
 		@endforeach
-		<a class="mdl-navigation__link" href="{{ url('') }}"><i class="material-icons">&#xE86E;</i> Homework</a>
+		<a class="mdl-navigation__link" href="{{ url('classcloud') }}"><i class="material-icons">cloud_download</i> ClassCloud</a>
 		<a class="mdl-navigation__link" href="/"><i class="material-icons">&#xE561;</i> Dinners</a>
 	@else
 		<a class="mdl-navigation__link" href="#">Link</a>

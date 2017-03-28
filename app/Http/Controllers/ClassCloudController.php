@@ -18,7 +18,9 @@ class ClassCloudController extends Controller
 				return view('classcloud.teacher-dashboard', ['classes' => $classes]);
 				break;
 			case 2:
-			//parent
+			//guardian
+				$students = $user->guardian->students()->with('class')->get();
+				return view('classcloud.parent-dashboard', ['students' => $students]);
 				break;
 			case 1:
 				return redirect('classcloud/'.$user->student->class->class_form);
@@ -38,6 +40,11 @@ class ClassCloudController extends Controller
 
 	public function subjectDashboard(Request $request, $classForm, $subject)
 	{
-		dd(Subject::where('name', $subject)->get());
+		$subject = Subject::where('name', $subject)->with(['resources' => function ($query) use ($classForm) {
+			$query->whereHas('classes', function ($query) use ($classForm) {
+				$query->where('class_form', $classForm);
+			});
+		}])->first();
+		return view('classcloud.subject-dashboard', ['resources' => $subject->resources]);
 	}
 }
