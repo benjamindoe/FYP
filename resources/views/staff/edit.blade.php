@@ -3,10 +3,10 @@
 	<form action="{{ url()->current() }}" method="post">
 	@if(isset($edit) && $edit)
 		{{ method_field('PUT') }}
+		<input type="hidden" name="id" value="{{ $staff->id }}">
 	@endif
 		{{ csrf_field() }}
 
-		<input type="hidden" name="id" value="{{ $staff->id }}">
 		@component('components.textfield', ['inputName' => 'username'])
 			@slot('value')
 				{{ $staff->user->username or '' }}
