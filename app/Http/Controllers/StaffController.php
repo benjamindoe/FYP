@@ -40,6 +40,7 @@ class StaffController extends Controller
 
 	public function showSchoolStaffAddForm(Request $request, int $urn)
 	{
+		$school = School::findOrFail($urn);
 		return view('staff.edit', ['roles' => Role::all(), 'title' => 'Add '.$school->establishment_name.' Staff']);
 	}
 
