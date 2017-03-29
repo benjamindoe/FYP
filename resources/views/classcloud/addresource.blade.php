@@ -18,7 +18,7 @@
 						@endslot
 						@foreach(['published', 'draft'] as $status)
 							<option value="{{ $status }}"
-								{{ old('status') === $status || $resource->status === $status
+								{{ old('status') === $status || (isset($resource) && $resource->status === $status)
 									? 'selected'
 									: '' }} >
 								{{ ucfirst($status) }}
