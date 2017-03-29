@@ -113,7 +113,7 @@ class StaffController extends Controller
 		Validator::make($request->all(), [
 			'password' => 'nullable|min:6|confirmed',
 			Rule::unique('users')
-				->ignore(Staff::findOrFail($data['id'])->user->id)
+				->ignore(Staff::findOrFail($request->input('id'))->user->id)
 		])->validate();
 
 		$staffInfo = $request->only(['forename', 'surname']);
