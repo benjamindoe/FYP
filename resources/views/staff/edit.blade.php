@@ -14,19 +14,17 @@
 			Username
 		@endcomponent
 
-		@if(!isset($edit) || !$edit)
-			@component('components.textfield', ['inputName' => 'password', 'type' => 'password'])
-				@slot('value')
-				@endslot
-				Password
-			@endcomponent
+		@component('components.textfield', ['inputName' => 'password', 'type' => 'password'])
+			@slot('value')
+			@endslot
+			Password
+		@endcomponent
 
-			@component('components.textfield', ['inputName' => 'password_confirmation', 'type' => 'password'])
-				@slot('value')
-				@endslot
-				Confirm Password
-			@endcomponent
-		@endif
+		@component('components.textfield', ['inputName' => 'password_confirmation', 'type' => 'password'])
+			@slot('value')
+			@endslot
+			Confirm Password
+		@endcomponent
 
 		@component('components.textfield', ['inputName' => 'forename'])
 			@slot('value')
