@@ -23,8 +23,8 @@ class AcademicYearsController extends Controller
 	public function add(Request $request)
 	{
 		$info = $request->only(['academic_year', 'year_start', 'year_end']);
-		$info['year_start'] = new Carbon($info['year_start']);
-		$info['year_end'] = new Carbon($info['year_end']);
+		$info['year_start'] = Carbon::createFromFormat('d/m/Y', $info['year_start']);
+		$info['year_end'] = Carbon::createFromFormat('d/m/Y',  $info['year_end']);
 		$academicYear = new AcademicYear($info);
 		$_ENV['school']->academicYears()->save($academicYear);
 		if($request->ajax())
