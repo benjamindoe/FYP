@@ -82,7 +82,7 @@
 									class="attendance-code"
 									classPeriod="{{$period->period}}"
 									maxlength=1 
-									pattern="[{{implode('|', $codes->pluck('code')->toArray())}}]{1}" 
+									{{-- pattern="[{{implode('|', $codes->pluck('code')->toArray())}}]{1}"  --}}
 									value="{{$code}}" >
 								@component('components.textfield', ['inputName' => 'student['.$student->id.']['.$period->period.'][notes]'])
 								@slot('value')
