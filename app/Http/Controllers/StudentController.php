@@ -130,7 +130,8 @@ class StudentController extends Controller
 		}
 		if($student->user)
 		{
-			$userInfo['password'] = bcrpyt($userInfo['password']);
+			if(!empty($request->input('password')))
+				$userInfo['password'] = bcrypt($userInfo['password']);
 			$student->user()->update($userInfo);
 		} else {
 			$user = createUser($request->only(['username', 'password']));

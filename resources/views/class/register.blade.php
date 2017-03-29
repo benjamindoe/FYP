@@ -1,10 +1,56 @@
 @extends('layouts.main')
 @section('content')
-<div class="mdl-grid">
-	<div class="mdl-layout-spacer"></div>
+<div class="mdl-grid" style="justify-content: center;">
+	<div class="mdl-cell mdl-cell--8-col mdl-grid">
+		<div class="">
+			<form action="{{ url()->current() }}" method="get" class="mdl-cell mdl-cell--8-col"> 
+				@component('components.textfield', ['inputName' => 'date', 'id' => 'date_datepicker', 'inputClass' => 'datepicker'])
+					@slot('value')
+						{{ $_GET['date'] or ''}}
+					@endslot
+						Register Date
+				@endcomponent
+				<button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored mdl-button--raised">
+					Search
+				</button>
+			</form>
+		</div>
+		<div class="mdl-cell mdl-cell--4-col">
+			<button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised show-modal">Show Modal</button>
+  		</div>
+		<dialog class="mdl-dialog">
+			<div class="mdl-dialog__content">
+			  <ul>
+			  	@foreach($codes as $code)
+			  		<li>
+			  			<b>{{$code->code}}</b> -- {{$code->description}}
+			  		</li>
+			  	@endforeach
+			  </ul>
+			</div>
+			<div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+			  <button type="button" class="mdl-button close">Close</button>
+			</div>
+		</dialog> 
+		<script>
+		    var dialog = document.querySelector('dialog');
+		    var showModalButton = document.querySelector('.show-modal');
+		    if (! dialog.showModal) {
+		      dialogPolyfill.registerDialog(dialog);
+		    }
+		    showModalButton.addEventListener('click', function() {
+		      dialog.showModal();
+		    });
+		    dialog.querySelector('.close').addEventListener('click', function() {
+		      dialog.close();
+		    });
+		</script>
+  
+	</div>
+	<div class="">
 	<form action="{{ url()->full() }}" method="POST" autocomplete="off">
 		{{csrf_field()}}
-		<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+		<table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col mdl-shadow--2dp">
 			<thead>
 				<th class="mdl-data-table__cell--non-numeric">Student</th>
 				@foreach($periods as $period)
@@ -12,10 +58,7 @@
 						{{strtoupper($period->period)}} <i class="material-icons" id="info[{{$period->period}}]">info outline</i>
 						<div class="mdl-tooltip" data-mdl-for="info[{{$period->period}}]">
 							/ (AM), \ (PM), L or N. More info
-							<ul>
-							</ul>
 						</div>
-
 					</th>
 				@endforeach
 			</thead>
@@ -58,7 +101,7 @@
 			<i class="material-icons">done</i>
 		</button>
 	</form>
-	<div class="mdl-layout-spacer"></div>
+	</div>
 </div>
 @if(isset($toastMessage))
 	<div id="register-toaster" class="mdl-js-snackbar mdl-snackbar" data-message="{{$toastMessage}}">

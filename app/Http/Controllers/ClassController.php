@@ -114,7 +114,7 @@ class ClassController extends Controller
 				if(!empty($register['code']))
 				{
 					$record = Student::find($studentId)->attendance()->firstOrnew(['date' => $date, 'period' => $key]);
-					$record->code = $register['code'];
+					$record->code = $key == 'pm' && $register['code'] == '/' ? '\\' : $register['code'];
 					$record->notes = $register['notes'];
 					$record->class_id = $class->id;
 					$record->save();
@@ -135,8 +135,7 @@ class ClassController extends Controller
 
 	public function findCurrentClasses($classForm = null, $date = null)
 	{
-		$date = empty($date) ? Carbon::today() : Carbon::parse($date);
-
+		$date = empty($date) ? Carbon::today() : Carbon::createFromFormat('d/m/Y H', $date.' 0');
 		$class = $_ENV['school']->classes();
 		if($classForm)
 			$class->where('class_form', $classForm);

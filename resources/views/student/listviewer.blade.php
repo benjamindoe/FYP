@@ -12,7 +12,7 @@
 				{{ $student->full_name }}
 			</td>
 			<td class="mdl-data-table__cell--non-numeric">
-				{{ $student->year_group }}
+				{{ $student->yearGroup->group }}
 			</td>
 			<td class="mdl-data-table__cell--non-numeric">
 				{{ $student->class->class_form }}
