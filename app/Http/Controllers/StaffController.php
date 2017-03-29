@@ -117,7 +117,7 @@ class StaffController extends Controller
 		])->validate();
 
 		$staffInfo = $request->only(['forename', 'surname']);
-		$userInfo['username'] = $request->only(['username']);
+		$userInfo['username'] = $request->input('username');
 		if (!empty($request->input('password')))
 			$userInfo['password'] = bcrypt($request->input('password'));
 
