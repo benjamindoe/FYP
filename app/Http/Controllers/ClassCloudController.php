@@ -18,7 +18,7 @@ class ClassCloudController extends Controller
 			case 3:
 			//staff
 				$classes = $user->staff->role == 'teacher' ? $user->staff->classes : $_ENV['school']->classes;
-				return view('classcloud.teacher-dashboard', ['classes' => $classes]);
+				return view('classcloud.class-dashboard', ['classes' => $classes]);
 				break;
 			case 2:
 			//guardian
