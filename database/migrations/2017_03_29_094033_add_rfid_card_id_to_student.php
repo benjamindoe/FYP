@@ -14,7 +14,7 @@ class AddRfidCardIdToStudent extends Migration
     public function up()
     {
         Schema::table('student', function (Blueprint $table) {
-            $table->string('rfid');
+            $table->string('rfid')->nullable();
         });
     }
 
