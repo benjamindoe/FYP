@@ -110,7 +110,9 @@ class StaffController extends Controller
 	{
 		$this->validator($request->all())->validate();
 		Validator::make($request->all(), [
-			'password' => 'nullable|min:6|confirmed'
+			'password' => 'nullable|min:6|confirmed',
+			Rule::unique('users')
+				->ignore(Staff::findOrFail($data['id'])->user->id)
 		])->validate();
 
 		$staffInfo = $request->only(['forename', 'surname']);
@@ -172,8 +174,6 @@ class StaffController extends Controller
 			'username'	=> [
 				'required',
 				'max: 255',
-				Rule::unique('users')
-					->ignore(Staff::findOrFail($data['id'])->user->id)
 			],
 			'forename'	=> 'required',
 			'surname'	=> 'required',
