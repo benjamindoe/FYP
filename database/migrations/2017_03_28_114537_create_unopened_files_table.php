@@ -19,8 +19,8 @@ class CreateUnopenedFilesTable extends Migration
             $table->unsignedInteger('resource_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('resource_id')->references('id')->on('class_cloud_files');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('resource_id')->references('id')->on('class_cloud_files')->onDelete('cascade');
         });
     }
 

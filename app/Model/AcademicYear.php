@@ -7,8 +7,8 @@ use Carbon\Carbon;
 
 class AcademicYear extends Model
 {
-    
-    /**
+	
+	/**
 	 * The table associated with the model.
 	 *
 	 * @var string
@@ -29,17 +29,17 @@ class AcademicYear extends Model
 	 */
 	protected $guarded = [];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'year_start',
-        'year_end',
-    ];
+	/**
+	 * The attributes that should be mutated to dates.
+	 *
+	 * @var array
+	 */
+	protected $dates = [
+		'created_at',
+		'updated_at',
+		'year_start',
+		'year_end',
+	];
 
 	public function school()
 	{

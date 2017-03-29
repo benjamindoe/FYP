@@ -20,7 +20,7 @@ class CreateClassCloudFilesTable extends Migration
 			$table->string('path')->nullable();
 			$table->string('status');
 			$table->string('name');
-			$table->string('notes');
+			$table->longText('notes');
 			$table->timestamps();
 			$table->softDeletes();
 

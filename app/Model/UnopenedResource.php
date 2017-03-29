@@ -9,6 +9,8 @@ class UnopenedResource extends Model
 
 	protected $table = 'unopened_files';
 
+	protected $guarded = [];
+
     public function file()
     {
     	return $this->belongsTo('App\Model\ClassCloudResource', 'resource_id');

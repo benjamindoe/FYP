@@ -29,4 +29,9 @@ class Guardian extends Model
 	{
 		return $this->hasMany('App\Model\UnopenedFile');
 	}
+
+	public function user()
+	{
+		return $this->hasOne('App\User', 'parent_id');
+	}
 }

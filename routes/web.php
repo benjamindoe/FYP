@@ -84,17 +84,20 @@ Route::group(['prefix' => 'school', 'middleware' => 'auth.explicit:staff'], func
 
 Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], function ()
 {
-	Route::get('{form}/register', 'ClassController@showRegForm');
-	Route::post('{form}/register', 'ClassController@classRegistration');
-	Route::get('{form}/homework', 'ClassController@listStudents');
-	Route::get('{form}/classlist', 'ClassController@listStudents');
-	Route::get('{form}/attainment', 'AttainmentController@showClassAttainmentRecord');
-	Route::group(['prefix' => '{form}/attainment'], function ()
+	Route::group(['prefix' => '{form}'], function () 
 	{
-		Route::get('/', 'AttainmentController@redirectToSubject');
-		Route::get('{subject}', 'AttainmentController@showClassAttainmentRecord');
-		Route::post('{subject}', 'AttainmentController@saveClassAttainment');
+		Route::get('register', 'ClassController@showRegForm');
+		Route::post('register', 'ClassController@classRegistration');
+		Route::get('homework', 'ClassController@listStudents');
+		Route::get('classlist', 'ClassController@listStudents');
+		Route::get('attainment', 'AttainmentController@showClassAttainmentRecord');
+		Route::group(['prefix' => 'attainment'], function ()
+		{
+			Route::get('/', 'AttainmentController@redirectToSubject');
+			Route::get('{subject}', 'AttainmentController@showClassAttainmentRecord');
+			Route::post('{subject}', 'AttainmentController@saveClassAttainment');
 
+		});
 	});
 	Route::group(['middleware' => 'auth.staff:admin'], function ()
 	{
@@ -109,10 +112,20 @@ Route::group(['prefix' => 'class', 'middleware' => 'auth.explicit:staff'], funct
 
 Route::group(['prefix' => 'classcloud', 'middleware' => 'auth.level:student'], function ()
 {
+	Route::group(['middleware' => 'auth.explicit:staff'], function ()
+	{
+		Route::get('{form}/{subject}/add-resource', 'ClassCloudController@showAddResourceForm');
+		Route::post('{form}/{subject}/add-resource', 'ClassCloudController@addResource');
+		Route::get('{form}/{subject}/{id}/edit', 'ClassCloudController@showEditForm');
+		Route::post('{form}/{subject}/{id}/edit', 'ClassCloudController@editResource');
+		Route::delete('{form}/{subject}/{id}', 'ClassCloudController@delete');
+
+	});
 	Route::get('/', 'ClassCloudController@dashboard');
 	Route::get('/{form}', 'ClassCloudController@classDashboard');
 	Route::get('{form}/{subject}', 'ClassCloudController@subjectDashboard');
-	Route::get('{form}/{subject}/{resource}', 'ClassCloudController@resource');
+	Route::get('{form}/{subject}/{id}/file', 'FileController@getFile');
+	Route::post('{form}/{subject}/{id}/read', 'ClassCloudController@markRead');
 });
 
 Route::group(['prefix' => 'academic-years', 'middleware' => 'auth.staff:admin'], function ()
@@ -134,10 +147,4 @@ Route::group(['prefix' => 'year-group', 'middleware' => 'auth.staff:admin'], fun
 Route::group(['prefix' => 'attainment', 'middleware' => 'auth.staff:admin'], function ()
 {
 	Route::get('', 'AttainmentController@showAdminForm');
-});
-
-Route::group(['prefix' => 'file', 'middleware' => 'auth'], function () 
-{
-	Route::get('{filename}', 'FileController@getFile');
-	Route::post('upload', 'FileController@uploadFile');
 });
