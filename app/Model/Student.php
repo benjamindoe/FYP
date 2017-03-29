@@ -38,7 +38,7 @@ class Student extends Model
 
 	public function guardians()
 	{
-		return $this->belongsToMany('App\Model\Guardian', 'student_parent');
+		return $this->belongsToMany('App\Model\Guardian', 'student_parent', 'student_id', 'parent_id');
 	}
 
 	public function UPN()

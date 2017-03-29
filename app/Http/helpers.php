@@ -18,3 +18,8 @@ function validate_password($data)
 		'password' => 'required|min:6|confirmed'
 	])->validate();
 }
+
+function preserve_nl($value)
+{
+	return nl2br(e($value));
+}
