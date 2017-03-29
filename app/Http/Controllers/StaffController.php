@@ -51,6 +51,7 @@ class StaffController extends Controller
 
 	public function showSchoolStaffEditForm(Request $request, int $urn, string $username)
 	{
+		$school = School::findOrFail($urn);
 		$staff = User::where('username', $username)->firstOrFail()->staff;
 		return view('staff.edit', ['staff' => $staff, 'edit' => true, 'roles' => Role::all(), 'title' => 'Editing '.$school->establishment_name.' Staff Member']);
 	}
