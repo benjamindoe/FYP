@@ -1,0 +1,23 @@
+.mdl-filefield {
+	position: relative;
+	font-size: 16px;
+	display: inline-block;
+	box-sizing: border-box;
+	width: 300px;
+	max-width: 100%;
+	margin: 0;
+	padding: 20px 0;
+	&__file {
+		cursor: pointer;
+		height: 100%;
+		right: 0;
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		width: 300px;
+	}
+	&__text {
+		display: inline-block;
+		width: calc(100% - 36px);
+	}
+}

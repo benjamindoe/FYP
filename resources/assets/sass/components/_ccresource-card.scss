@@ -1,0 +1,20 @@
+.mdl-card.ccresource {
+	.mdl-card__supporting-text {
+		height: 20px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		transition: height 0.5s ease, ;
+		-webkit-transition: height 0.5s ease;
+	}
+	&.expanded .mdl-card__supporting-text {
+		height:300px;
+		white-space: normal;
+		transition: height 0.5s ease;
+		-webkit-transition: height 0.5s ease;
+	}
+	.file-unopened {
+		position: absolute;
+		bottom: 13px;
+		right: 10px;
+	}
+}
