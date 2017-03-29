@@ -15,7 +15,7 @@
 				</div>
 				<div class="mdl-card__supporting-text">
 					{!! preserve_nl($resource->notes) !!}
-					@if (auth()->user()->guardian || auth()->user->student)
+					@if (auth()->user()->guardian || auth()->user()->student)
 						@if ($resource->unopened->count())
 							<i class="material-icons file-unopened">new_releases</i>
 						@else

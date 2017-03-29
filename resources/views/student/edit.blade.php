@@ -61,13 +61,19 @@
 			Date of Arrival
 		@endcomponent
 
-		@component('components.textfield', ['inputName' => 'year_group', 'type' => 'number'])
-			@slot('value')
-				{{ $student->year_group or '' }}
+		@component('components.dropdown', ['inputName' => 'year_group'])
+			@slot('label')
+				Year Group
 			@endslot
-			Year Group
+			@foreach($acYear as $yrGrp)
+				<option value="{{ $yrGrp->id }}"
+					{{ (old('year_group') === $yrGrp->id || (isset($student) && $student->year_group === $yrGrp->id)
+						? 'selected'
+						: '') }} >
+					{{ ucfirst($yrGrp->group) }}
+				</option>
+			@endforeach
 		@endcomponent
-
 		@component('components.textfield', ['inputName' => 'username'])
 			@slot('value')
 				{{ $student->user->username or '' }}

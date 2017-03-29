@@ -10,7 +10,7 @@ use App\Model\AttainmentAverage;
 use App\Model\AttainmentPeriod;
 use App\Model\AttainmentGrade;
 use App\Model\Student;
-
+use App\Model\YearGroup;
 class StudentController extends Controller
 {
 	public function showStudentProfile(Request $request, int $id)
@@ -74,13 +74,13 @@ class StudentController extends Controller
 
 	public function showAddForm()
 	{
-		return view('student.edit', ['url' => 'students/add', 'title' => 'Add Student Manually']);
+		return view('student.edit', ['url' => 'students/add', 'title' => 'Add Student Manually', 'acYear' => YearGroup::all()]);
 	}
 
 	public function showEditForm(Request $request, $id)
 	{
 		$student = $_ENV['school']->students()->findOrFail($id);
-		return view('student.edit', ['student' => $student, 'url' => url()->current(), 'title' => 'Editing '.$student->legal_forename.' '.$student->legal_surname]);
+		return view('student.edit', ['student' => $student, 'url' => url()->current(), 'title' => 'Editing '.$student->legal_forename.' '.$student->legal_surname, 'acYear' => YearGroup::all()]);
 	}
 
 	public function add(Request $request)

@@ -21,3 +21,5 @@ window.ProgressBar = require('progressbar.js');
 window.DialogPolyfill = require('dialog-polyfill');
 
 window.Chart = require('chart.js');
+
+window.Tinkerforge = require('tinkerforge');

@@ -33,6 +33,7 @@
 							@endphp
 							<td class="mdl-data-table__cell--non-numeric attendance">
 								<input
+									id="student-{{$student->id}}"
 									type="text"
 									name="student[{{ $student->id }}][{{ $period->period }}][code]"
 									class="attendance-code"
@@ -74,4 +75,9 @@
 		});
 	</script>
 @endif
+<script>
+	$(document).ready(function () {
+		startScanning();
+	});
+</script>
 @endsection
