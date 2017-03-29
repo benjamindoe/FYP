@@ -119,7 +119,7 @@ class StaffController extends Controller
 		$staffInfo = $request->only(['forename', 'surname']);
 		$userInfo['username'] = $request->only(['username']);
 		if (!empty($request->input('password')))
-			$userInfo['password'] = $request->input('password');
+			$userInfo['password'] = bcrypt($request->input('password'));
 
 		$staff = $this->staffFinder($request->input('id'), $urn);
 		$staff->update($staffInfo);
