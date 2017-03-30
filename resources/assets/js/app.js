@@ -9,6 +9,7 @@ require('./custom/upn-radio');
 require('./custom/progressbar');
 require('./custom/chart');
 require('./custom/ccresource-card.js');
+require('./custom/mdl-filefield.js');
 
 // Vue.component('example', require('./components/Example.vue'));
 // Vue.component('textfield', require('./components/Textfield.vue'));

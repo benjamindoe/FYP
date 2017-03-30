@@ -86,8 +86,8 @@ class ClassCloudController extends Controller
 		$ccr->status = $request->status;
 		$ccr->class_id = $class->id;
 		$ccr->subject_id = $subject->id;
-		$path = $request->file('resource_file')->store('classcloud');
-		$ccr->path = $path;
+		if($request->hasFile('resource_file'))
+			$ccr->path = $request->hasFile('resource_file') ? $request->file('resource_file')->store('classcloud') : '';
 		$ccr->save();
 		foreach($class->students as $student)
 		{

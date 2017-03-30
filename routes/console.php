@@ -2,7 +2,7 @@
 
 use Illuminate\Foundation\Inspiring;
 use App\Model\School;
-use App\Model\YearGroups;
+use App\Model\YearGroup;
 use App\Model\AttainmentRecord;
 use App\Model\AttainmentAverage;
 
@@ -22,7 +22,8 @@ Artisan::command('inspire', function () {
 })->describe('Display an inspiring quote');
 
 Artisan::command('avg-att', function () {
-	foreach(YearGroups::all() as $yg) //Needs to be changed to loop through year groups
+	AttainmentAverage::truncate();
+	foreach(YearGroup::all() as $yg) //Needs to be changed to loop through year groups
 	{
 		$records = AttainmentRecord::select(\DB::raw('ROUND(AVG(grade), 0) AS avg_grade'), 'period', 'subject_id')
 			->groupBy('period', 'subject_id')
