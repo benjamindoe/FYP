@@ -46,7 +46,7 @@ class StudentController extends Controller
 		$percentage['week'] = division($studentWeek, $possiblePeriodsWeek);
 		$percentage['month'] = division($studentMonth, $possiblePeriodsMonth);
 
-		$attainment['grades'] = AttainmentGrade::all()->pluck('code');
+		$attainment['grades'] = AttainmentGrade::orderBy('precedence', 'desc')->get()->pluck('code');
 		$attainment['periods'] = AttainmentPeriod::all()->pluck('name');
 		$attainment['target'] =  $student->attainmentTargets()->with('attainmentGrade')->with('subject')->get();
 	
@@ -58,6 +58,8 @@ class StudentController extends Controller
 
 		$attainment['averages'] = AttainmentAverage::whereHas('attainmentPeriod', function($query) {
 			$query->where('milestone', '<=', Carbon::today());
+		})->whereHas('yearGroup', function ($query) use ($student) {
+			$query->where('year_group', $student->year_group);
 		})->with(['attainmentPeriod' => function($query) {
 				$query->orderBy('milestone', 'asc');
 		}])->with('attainmentGrade')->with('subject')->get();

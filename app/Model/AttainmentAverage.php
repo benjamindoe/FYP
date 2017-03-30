@@ -22,4 +22,9 @@ class AttainmentAverage extends Model
 	{
 		return $this->belongsTo('App\Model\AttainmentGrade', 'avg_grade');
 	}
+
+	public function yearGroup()
+	{
+		return $this->belongsTo('App\Model\YearGroup', 'year_group');
+	}
 }

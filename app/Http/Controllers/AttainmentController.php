@@ -40,11 +40,16 @@ class AttainmentController extends Controller
 					$record->grade = $value;
 					$record->save();
 				}
-				else if(!empty($value['grade']))
-				{
+				else {
 					$record = AttainmentRecord::firstOrnew(['period' => $key, 'student_id' => $studentId, 'subject_id' => $subject->id]);
-					$record->grade = $value['grade'];
-					$record->save();
+					if(!empty($value['grade']))
+					{
+						$record->grade = $value['grade'];
+						$record->save();
+					} else 
+					{
+						$record->delete();
+					}
 				}
 			}
 		}

@@ -9,7 +9,7 @@
 			</div>
 		@endif
 		@foreach($resources as $key => $resource)
-			<div class="mdl-cell mdl-cell--8-col mdl-card mdl-shadow--2dp ccresource" data-opened="opened/unopened">
+			<div class="mdl-cell mdl-cell--8-col mdl-card mdl-shadow--2dp ccresource" data-opened="{{ (auth()->user()->guardian || auth()->user()->student) && $resource->unopened->count() ? 'unopened' : 'opened' }}"  data-ccr-id="{{ $resource->id }}">	
 				<div class="mdl-card__title mdl-card--expand">
 					<h2 class="mdl-card__title-text">{{ $resource->name }}</h2>
 				</div>
