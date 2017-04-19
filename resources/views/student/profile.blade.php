@@ -43,8 +43,8 @@
 				<canvas
 					style="width:300px; height: 200px"
 					class="chartjs" id="attainment-chart-{{$subject}}"
-					data-chart-yaxis='["A", "B", "C", "D", "E", "F"]'
-					data-chart-labels='["Aug", "Sept", "Oct", "Nov", "Dec", "Jan"]'
+					data-chart-yaxis='{{ $attainment['grades'] }}'
+					data-chart-labels='{{ $attainment['periods'] }}'
 					data-chart="{{ $attainment['student']->where('subject.name', $subject)->pluck('attainmentGrade.precedence')->toJson() }}"
 					data-chart-average="{{ $attainment['averages']->where('subject.name', $subject)->pluck('attainmentGrade.precedence')->toJson() }}"
 					data-chart-target="{{$attainment['target']->where('subject.name', $subject)->pluck('attainmentGrade.precedence')->first()}}"
