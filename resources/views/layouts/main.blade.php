@@ -29,12 +29,9 @@
 			<a class="mdl-navigation__link" href="{{ url('student/'.$student->id) }}"><i class="material-icons">&#xE85C;</i> {{ $student->full_name }}</a>
 		@endforeach
 		<a class="mdl-navigation__link" href="{{ url('classcloud') }}"><i class="material-icons">cloud_download</i> ClassCloud</a>
-		<a class="mdl-navigation__link" href="/"><i class="material-icons">&#xE561;</i> Dinners</a>
+		{{-- <a class="mdl-navigation__link" href="/"><i class="material-icons">&#xE561;</i> Dinners</a> --}}
 	@else
-		<a class="mdl-navigation__link" href="#">Link</a>
-		<a class="mdl-navigation__link" href="#">Link</a>
-		<a class="mdl-navigation__link" href="#">Link</a>
-		<a class="mdl-navigation__link" href="#">Link</a>
+		<a class="mdl-navigation__link" href="{{ url('classcloud') }}"><i class="material-icons">cloud_download</i> ClassCloud</a>
 	@endif
 	<a class="mdl-navigation__link" href="{{ route('logout')}}"><i class="material-icons">&#xE8AC;</i> Logout</a>
 	</nav>

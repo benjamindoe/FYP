@@ -19,7 +19,7 @@ class HomeController extends Controller
 		}
 	}
 
-	public function dashboard()
+	public function dashboard(Request $request)
 	{
 		$userLevel = auth()->user()->userLevel();
 		switch ($userLevel)
@@ -35,7 +35,7 @@ class HomeController extends Controller
 				break;
 			case 'student':
 			default:
-				# code...
+				return app('App\Http\Controllers\StudentController')->showStudentProfile($request, 0);
 				break;
 		}
 		return view('default.index', ['title' => 'Dashboard']);
