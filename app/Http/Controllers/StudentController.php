@@ -19,7 +19,7 @@ class StudentController extends Controller
 		switch(auth()->user()->role())
 		{
 			case 'student':
-				$student = auth()->user()->student()->with('attendance');
+				$student = auth()->user()->student()->with('attendance')->firstOrFail();
 				break;
 			case 'guardian':
 				$student = auth()->user()->guardian->students()->with('attendance')->findOrFail($id);

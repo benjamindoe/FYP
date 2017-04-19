@@ -84,7 +84,7 @@ function startScanning() {
 							}
 						}, 300);
 					});
-					$.post('http://127.0.0.1:8000/api/register',{'tagid': tagId}, function(data){
+					$.post('http://ec2-52-56-199-23.eu-west-2.compute.amazonaws.com/api/register',{'tagid': tagId}, function(data){
 						clearInterval(timer);
 						lcdWrite(lcd, 'Registered ' + data.regStudent);
 						$('#student-' + data.regStudentId).val(data.code);
