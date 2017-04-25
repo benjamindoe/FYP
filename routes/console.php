@@ -38,4 +38,5 @@ Artisan::command('avg-att', function () {
 			$att->save();
 		}
 	}
+    $this->info('Attainment averages calculated.');
 });

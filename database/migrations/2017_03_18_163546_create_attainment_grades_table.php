@@ -16,7 +16,7 @@ class CreateAttainmentGradesTable extends Migration
 		Schema::create('attainment_grades', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('code')->unique();
-			$table->string('description');
+			$table->string('description')->nullable();
 			$table->unsignedInteger('precedence');
 			$table->timestamps();
 		});

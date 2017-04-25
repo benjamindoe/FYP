@@ -14,9 +14,9 @@ class AddAddressLines extends Migration
     public function up()
     {
         Schema::table('address', function (Blueprint $table) {
-            $table->string('address_line_3');
-            $table->string('address_line_4');
-            $table->string('address_line_5');
+            $table->string('address_line_3')->nullable();
+            $table->string('address_line_4')->nullable();
+            $table->string('address_line_5')->nullable();
             $table->string('postcode');
         });
     }

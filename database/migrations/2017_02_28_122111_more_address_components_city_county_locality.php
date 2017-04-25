@@ -15,8 +15,8 @@ class MoreAddressComponentsCityCountyLocality extends Migration
     {
         Schema::table('address', function (Blueprint $table) {
             $table->renameColumn('address_line_5', 'locality');
-            $table->string('city');
-            $table->string('county');
+            $table->string('city')->nullable();
+            $table->string('county')->nullable();
         });
     }
 
