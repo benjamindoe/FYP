@@ -12,7 +12,7 @@
 	</table>
 	<div class="mdl-layout-spacer"></div>
 	@unless(isset($noAddFab) && $noAddFab)
-		<a href="{{ url($url.'/add') }}" class="fab--add mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+		<a href="{{ url()->current().'/add' }}" class="fab--add mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
 			<i class="material-icons">add</i>
 		</a>
 	@endunless

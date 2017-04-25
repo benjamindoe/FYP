@@ -23,7 +23,7 @@ Route::get('logout', 'Auth\LoginController@logout');
 
 Route::any('dashboard', 'HomeController@dashboard')->name('home')->middleware('auth');
 
-Route::get('profile/{username}', 'Controllre@method');
+// Route::get('profile/{username}', 'Controllre@method');
 
 Route::group(['prefix' => 'students', 'middleware' => 'auth.staff:admin'], function ()
 {
@@ -144,7 +144,10 @@ Route::group(['prefix' => 'year-group', 'middleware' => 'auth.staff:admin'], fun
 	Route::get('calculate', 'YearGroupController@calculate');
 });
 
-Route::group(['prefix' => 'attainment', 'middleware' => 'auth.staff:admin'], function ()
+
+Route::group(['prefix' => 'houses', 'middleware' => 'auth.level:student'], function ()
 {
-	Route::get('', 'AttainmentController@showAdminForm');
+	Route::get('/', 'HouseController@showHouses');
+	Route::get('points', 'HouseController@showPointsForm')->middleware('auth.explicit:staff');
+	Route::post('points', 'HouseController@alterPoints')->middleware('auth.explicit:staff');
 });

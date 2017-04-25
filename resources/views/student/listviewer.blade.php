@@ -17,7 +17,7 @@
 			<td class="mdl-data-table__cell--non-numeric">
 				{{ $student->class->class_form }}
 			</td>
-			@component('components.listviewer-actions', ['url' => $url.'/'.$student->id])
+			@component('components.listviewer-actions', ['url' => url()->current().'/'.$student->id])
 			@endcomponent
 		</tr>
 	@endforeach

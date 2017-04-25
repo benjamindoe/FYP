@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-	<form action="{{ url($url) }}" method="post">
+	<form action="{{ url()->current() }}" method="post">
 	@unless(request()->is('students/add'))
 		{{ method_field('PUT') }}
 	@endunless
@@ -74,6 +74,21 @@
 				</option>
 			@endforeach
 		@endcomponent
+
+		@component('components.dropdown', ['inputName' => 'house'])
+			@slot('label')
+				House
+			@endslot
+			@foreach($houses as $house)
+				<option value="{{ $house->id }}"
+					{{ (old('house') === $house->id || (isset($student) && $student->house_id === $house->id)
+						? 'selected'
+						: '') }} >
+					{{ $house->name }}
+				</option>
+			@endforeach
+		@endcomponent
+
 		@component('components.textfield', ['inputName' => 'username'])
 			@slot('value')
 				{{ $student->user->username or '' }}
