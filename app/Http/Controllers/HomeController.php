@@ -34,8 +34,9 @@ class HomeController extends Controller
 				# code...
 				break;
 			case 'student':
-			default:
 				return app('App\Http\Controllers\StudentController')->showStudentProfile($request, 0);
+				break;
+			default:
 				break;
 		}
 		return view('default.index', ['title' => 'Dashboard']);

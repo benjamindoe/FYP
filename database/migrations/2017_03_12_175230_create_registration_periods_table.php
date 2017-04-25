@@ -18,11 +18,6 @@ class CreateRegistrationPeriodsTable extends Migration
 			$table->string('period')->primary();
 			$table->timestamps();
 		});
-
-		DB::table('registration_periods')->insert([
-			['period' => 'am'],
-			['period' => 'pm']
-		]);
 	}
 
 	/**
