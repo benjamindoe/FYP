@@ -10,7 +10,7 @@
 		<a class="mdl-navigation__link" href="/">
 			<i class="material-icons">dashboard</i> Dashboard</a>
 	@if(Auth::user()->isSuperAdmin())
-		<a class="mdl-navigation__link" href="{{ url('schools') }}">Schools</a>
+		<a class="mdl-navigation__link" href="{{ url('schools') }}"><i class="material-icons">&#xE7F1;</i> Schools</a>
 	@elseif(Auth::user()->staff !== null)
 		@if(Auth::user()->staff->role == 'admin')
 			<a class="mdl-navigation__link" href="{{ url('school') }}"><i class="material-icons">&#xE7F1;</i> School</a>
@@ -22,8 +22,9 @@
 				<a class="mdl-navigation__link" href="{{ url('class/'.$class->class_form.'/register') }}"><i class="material-icons">&#xE85D;</i> {{$class->class_form}} Register</a>
 				<a class="mdl-navigation__link" href="{{ url('class/'.$class->class_form.'/attainment') }}"><i class="material-icons">&#xE85C;</i> {{$class->class_form}} Attainment</a>
 			@endforeach
-				<a class="mdl-navigation__link" href="{{ url('classcloud') }}"><i class="material-icons">cloud_upload</i> ClassCloud</a>
+			<a class="mdl-navigation__link" href="{{ url('classcloud') }}"><i class="material-icons">cloud_upload</i> ClassCloud</a>
 		@endif
+		<a class="mdl-navigation__link" href="{{ url('houses/points')}}"><i class="material-icons">&#xE800;</i> House Points</a>
 	@elseif(Auth::user()->guardian)
 		@foreach(Auth::user()->guardian->students as $student)
 			<a class="mdl-navigation__link" href="{{ url('student/'.$student->id) }}"><i class="material-icons">&#xE85C;</i> {{ $student->full_name }}</a>
@@ -33,6 +34,7 @@
 	@else
 		<a class="mdl-navigation__link" href="{{ url('classcloud') }}"><i class="material-icons">cloud_download</i> ClassCloud</a>
 	@endif
+	<a class="mdl-navigation__link" href="{{ url('houses')}}"><i class="material-icons">&#xE7EF;</i> Houses</a>
 	<a class="mdl-navigation__link" href="{{ route('logout')}}"><i class="material-icons">&#xE8AC;</i> Logout</a>
 	</nav>
 </div>
