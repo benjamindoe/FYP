@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 @section('title', 'Login')
-@section('form-action', url('/login'))
+@section('form-action', url()->current())
 @section('form-fields')
 	@component('components.textfield', ['inputName' => 'username'])
 		@slot('value')

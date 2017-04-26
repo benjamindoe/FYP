@@ -11,6 +11,6 @@ class HouseSeeder extends Seeder
      */
     public function run()
     {
-        //
+		factory(App\Model\House::class, 4)->create();
     }
 }

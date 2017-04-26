@@ -31,7 +31,7 @@ class AddYearGroupsFks extends Migration
 		Schema::table('student', function (Blueprint $table) {
 			$table->dropForeign(['year_group']);
 		});
-        Schema::table('student', function (Blueprint $table) {
+        Schema::table('attainment_averages', function (Blueprint $table) {
 			$table->dropForeign(['year_group']);
         });
 	}

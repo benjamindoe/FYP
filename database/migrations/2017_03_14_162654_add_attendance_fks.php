@@ -27,7 +27,9 @@ class AddAttendanceFks extends Migration
 	 */
 	public function down()
 	{
-		$table->dropForeign(['period']);
-		$table->dropForeign(['code']);
+		Schema::table('attendance', function($table) {
+			$table->dropForeign(['period']);
+			$table->dropForeign(['code']);
+		});
 	}
 }

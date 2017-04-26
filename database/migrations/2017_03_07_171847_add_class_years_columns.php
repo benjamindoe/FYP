@@ -26,7 +26,7 @@ class AddClassYearsColumns extends Migration
 	public function down()
 	{
 		Schema::table('class', function (Blueprint $table) {
-			$table->dropColumn('school_year');
+			$table->dropColumn('academic_year');
 		});
 	}
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ParentSeeder extends Seeder
+class SubjectSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +11,10 @@ class ParentSeeder extends Seeder
      */
     public function run()
     {
-        //
+    	DB::table('subject')->insert([
+			['name' => 'Maths'],
+			['name' => 'English'],
+			['name' => 'Science']
+		]);
     }
 }

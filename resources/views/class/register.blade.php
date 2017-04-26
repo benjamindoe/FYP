@@ -3,7 +3,7 @@
 <div class="mdl-grid" style="justify-content: center;">
 	<div class="mdl-cell mdl-cell--8-col mdl-grid">
 		<div class="">
-			<form action="{{ url()->current() }}" method="get" class="mdl-cell mdl-cell--8-col"> 
+			<form action="{{ url()->current() }}" method="get" class="mdl-cell mdl-cell--12-col"> 
 				@component('components.textfield', ['inputName' => 'date', 'id' => 'date_datepicker', 'inputClass' => 'datepicker'])
 					@slot('value')
 						{{ $_GET['date'] or ''}}
@@ -15,10 +15,10 @@
 				</button>
 			</form>
 		</div>
-		<div class="mdl-cell mdl-cell--4-col">
-			<button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised show-modal">Show Modal</button>
+		<div class="mdl-cell mdl-cell--4col"  style="line-height: 65px">
+			<button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised show-modal">Registration Codes</button>
   		</div>
-		<dialog class="mdl-dialog">
+		<dialog class="mdl-dialog" style="width: 95%">
 			<div class="mdl-dialog__content">
 			  <ul>
 			  	@foreach($codes as $code)

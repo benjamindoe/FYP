@@ -120,6 +120,29 @@ class User extends Authenticatable
 		}
 	}
 
+	public function getNameAttribute()
+	{
+		switch ($this->userLevel())
+		{
+			case 1:
+				return $this->student->fullName;
+				break;
+			case 2:
+				return $this->guardian->forename. ' '.$this->guardian->surname;
+				break;
+			case 3:
+				return $this->staff->forename. ' '.$this->staff->surname;
+				break;
+			case 4:
+				return 'Admin';
+				break;
+			case 0:
+			default:
+				return 'Guest';
+				break;
+		}
+	}
+
 	public function unopenedResources()
 	{
 		return $this->hasMany('App\Model\UnopenedResource');
