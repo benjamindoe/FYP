@@ -36,6 +36,8 @@ class AddSubjectFksAttainmentTables extends Migration
         });
         Schema::table('attainment_record', function (Blueprint $table) {
             $table->dropForeign(['period']);
+        });
+        Schema::table('attainment_record', function (Blueprint $table) {
             $table->string('period')->change();
         });
     }

@@ -22,11 +22,11 @@ class AttainmentSeeder extends Seeder
 		]);
 
 		DB::table('attainment_grades')->insert([
-			['code' => 'E', 'precedance' => '0', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-			['code' => 'D', 'precedance' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-			['code' => 'C', 'precedance' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-			['code' => 'B', 'precedance' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
-			['code' => 'A', 'precedance' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['code' => 'E', 'precedence' => '0', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['code' => 'D', 'precedence' => '1', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['code' => 'C', 'precedence' => '2', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['code' => 'B', 'precedence' => '3', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
+			['code' => 'A', 'precedence' => '4', 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()],
 		]);
 	}
 }

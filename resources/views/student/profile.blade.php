@@ -61,6 +61,10 @@
 		<p>Class: {{ $student->class->class_form }}</p>
 		<p>Year Group: {{ $student->yearGroup->group }}</p>
 		<p>Key Stage: {{ $student->yearGroup->keystage }}</p>
+		<p>House:	<span id="container" style="display:inline-block; height: 15px; width: 15px; overflow: hidden; background-color:  {{ $student->house->primary_colour }}">
+    					<span id="triangle-topleft" style="display: block; width: 0 height: 0; border-top: 15px solid {{ $student->house->secondary_colour }}; border-right: 15px solid transparent;"></span>&nbsp;
+  					</span> {{ $student->house->name }}
+  		</p>
 		</div>
 	</div>
 </div>

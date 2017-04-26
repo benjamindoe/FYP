@@ -14,7 +14,7 @@ class SchoolSeeder extends Seeder
 		$urn = 139349;
 		$addressId = DB::table('address')->insert([
 			'address_line_1' => 'Lantern Lane Primary School',
-			'address_line_2' => 'Lntern Lane',
+			'address_line_2' => 'Lantern Lane',
 			'locality' => 'East Leake',
 			'postcode' => 'LE12 6QN',
 			'city' => 'Lougborough',
@@ -42,9 +42,8 @@ class SchoolSeeder extends Seeder
 		]);
 
 		DB::table('class')->insert([
-			'class_form' => '3AA',
-			'school_urn' => $urn,
-			'academic_year' => 1
+			['class_form' => '3AA', 'school_urn' => $urn, 'academic_year' => 1],
+			['class_form' => '4BB', 'school_urn' => $urn, 'academic_year' => 1]
 		]);
 	}
 }

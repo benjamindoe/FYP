@@ -17,6 +17,6 @@ class Upn extends Model
 			['establishment_number', $estNum],
 			['la_number', $laNum],
 			['is_temp', $isTemp]
-			])->orderBy('created_at', 'desc')->first();
+			])->orderBy('created_at', 'desc')->orderBy('serial_number', 'desc')->first();
 	}
 }

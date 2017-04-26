@@ -107,4 +107,9 @@ class Student extends Model
 	{
 		return $this->belongsTo('App\Model\YearGroup', 'year_group');
 	}
+
+	public function house()
+	{
+		return $this->belongsTo('App\Model\House', 'house_id');
+	}
 }

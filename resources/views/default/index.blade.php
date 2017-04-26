@@ -1,17 +1,12 @@
 @extends('layouts.main')
 @section('content')
-	<div class="flex-center position-ref full-height">
-		<div class="content">
-			<div class="mdl-typography--display-4">
-				Laravel
+	<div class="mdl-grid" style="justify-content: center;">
+		<div class="mdl-cell--12-col">
+			<div class="mdl-typography--display-1">
+				Hello, {{auth()->user()->name}}
 			</div>
-
-			<div class="links">
-				<a href="https://laravel.com/docs">Documentation</a>
-				<a href="https://laracasts.com">Laracasts</a>
-				<a href="https://laravel-news.com">News</a>
-				<a href="https://forge.laravel.com">Forge</a>
-				<a href="https://github.com/laravel/laravel">GitHub</a>
+			<div class="mdl-typography--display-3" style="text-align: center; margin-top: 30px;">
+				Primary School Reporting Management System
 			</div>
 		</div>
 	</div>
