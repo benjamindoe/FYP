@@ -24,7 +24,7 @@ class ExplicitRole
 			{
 				return $next($request);
 			}
-			return abort(403);;
+			return abort(403);
 		}
 		return redirect()->guest('login');
 	}
